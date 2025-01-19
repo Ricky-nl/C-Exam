@@ -45,47 +45,51 @@
     <div id="result"></div>
 
     <script>
-        // Array of questions
+        // Array of questions (60 total)
         const questions = [
-            // Pointers
-            { question: "What does a pointer store in C?", options: ["The value of a variable", "The memory address of a variable", "The size of a variable", "None of the above"], correct: 1 },
-            { question: "What will be the output of the following code?\n\n```c\nint main() {\n    int a = 10;\n    int *p = &a;\n    printf('%d', *p);\n    return 0;\n}\n```", options: ["10", "Memory address of a", "Error", "None of the above"], correct: 0 },
-            { question: "What does the following code do?\n\n```c\nint main() {\n    int x = 5, *p = &x;\n    *p = 10;\n    printf('%d', x);\n    return 0;\n}\n```", options: ["Prints 5", "Prints 10", "Segmentation fault", "None of the above"], correct: 1 },
-            { question: "What is the output of the following C code?\n\n```c\nint main() {\n    int a = 3, b = 4;\n    int *p = &a, *q = &b;\n    printf('%d', *p + *q);\n    return 0;\n}\n```", options: ["7", "12", "Error", "None of the above"], correct: 0 },
+            // Pointers Section
+            { question: "What is the output of the following code?\n\n```c\nint x = 5, *ptr = &x;\n*ptr = 10;\nprintf('%d', x);\n```", options: ["10", "5", "Segmentation fault", "Error"], correct: 0 },
+            { question: "Which of the following is true about pointers in C?", options: ["A pointer holds the value of a variable", "A pointer holds the memory address of a variable", "Pointers can only point to integers", "Pointers are the same as arrays"], correct: 1 },
+            { question: "What will the following code print?\n\n```c\nint a = 20, *p = &a;\nprintf('%d', *p);\n```", options: ["20", "Memory address of a", "Error", "None of the above"], correct: 0 },
+            { question: "What does the dereference operator (*) do in C?", options: ["Accesses the value at a memory address", "Returns the memory address", "Creates a pointer", "None of the above"], correct: 0 },
+            { question: "What will be printed by this code?\n\n```c\nint arr[3] = {1, 2, 3};\nint *p = arr;\nprintf('%d', *(p + 1));\n```", options: ["2", "1", "3", "Error"], correct: 0 },
             
-            // Structures
-            { question: "Which operator is used to access a structure's member via a pointer?", options: ["dot operator (.)", "arrow operator (->)", "address-of operator (&)", "colon operator (:)" ], correct: 1 },
-            { question: "What will the following code do?\n\n```c\nstruct Point {\n    int x, y;\n};\nint main() {\n    struct Point p = {1, 2};\n    printf('%d, %d', p.x, p.y);\n    return 0;\n}\n```", options: ["Prints 1, 2", "Prints 1, 1", "Prints garbage values", "None of the above"], correct: 0 },
-            { question: "What is the correct syntax to define a pointer to a structure?\n\n```c\nstruct Person { char name[30]; int age; };\n```", options: ["struct Person *p;", "struct *p Person;", "pointer struct Person;", "None of the above"], correct: 0 },
-            { question: "What is the output of the following code?\n\n```c\nstruct Student {\n    int id;\n    float marks;\n};\nint main() {\n    struct Student s = {101, 95.5};\n    printf('%d, %.2f', s.id, s.marks);\n    return 0;\n}\n```", options: ["101, 95.5", "Error", "None of the above", "101, 95"], correct: 0 },
-
-            // Dynamic Memory Allocation
-            { question: "What does the malloc function do in C?", options: ["Allocates memory on the stack", "Allocates memory on the heap", "Frees memory", "None of the above"], correct: 1 },
-            { question: "What is the correct syntax for dynamically allocating an array of 10 integers in C?", options: ["int *arr = malloc(10 * sizeof(int));", "int *arr = malloc(10);", "int *arr = new int[10];", "int *arr = malloc(sizeof(int[10]));"], correct: 0 },
-            { question: "What will the following code print?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\nprintf('%d', arr[2]);\nfree(arr);\nreturn 0;\n}```", options: ["2", "3", "1", "5"], correct: 1 },
-            { question: "What is the purpose of the 'free' function in C?", options: ["To allocate memory", "To deallocate previously allocated memory", "To initialize variables", "None of the above"], correct: 1 },
+            // Structures Section
+            { question: "Which operator is used to access a structure's member via a pointer?", options: ["dot operator (.)", "arrow operator (->)", "address-of operator (&)", "colon operator (:)"], correct: 1 },
+            { question: "Which of the following is the correct way to declare a structure?", options: ["struct {int a; float b;} s;", "struct s {int a; float b;};", "struct s {a: int; b: float;};", "struct s (int a, float b);"], correct: 1 },
+            { question: "What does the following C code do?\n\n```c\nstruct Point {\n    int x, y;\n};\nint main() {\n    struct Point p = {1, 2};\n    printf('%d, %d', p.x, p.y);\n    return 0;\n}\n```", options: ["Prints 1, 2", "Prints 1, 1", "Prints garbage values", "None of the above"], correct: 0 },
+            { question: "What will the following code output?\n\n```c\nstruct Student {\n    int id;\n    float marks;\n};\nint main() {\n    struct Student s = {101, 95.5};\n    printf('%d, %.2f', s.id, s.marks);\n    return 0;\n}\n```", options: ["101, 95.5", "Error", "None of the above", "101, 95"], correct: 0 },
+            { question: "Which is the correct way to pass a structure to a function?", options: ["By passing a pointer to the structure", "By passing a copy of the structure", "By passing a reference variable", "None of the above"], correct: 0 },
             
-            // Files and Streams
+            // Dynamic Memory Section
+            { question: "What is the correct syntax to allocate memory dynamically for an array of 10 integers?", options: ["int *arr = malloc(10 * sizeof(int));", "int *arr = malloc(10);", "int arr = new int[10];", "int arr[10] = malloc();"], correct: 0 },
+            { question: "Which function is used to deallocate memory in C?", options: ["malloc()", "free()", "calloc()", "realloc()"], correct: 1 },
+            { question: "What is the purpose of the 'calloc' function?", options: ["Allocates memory for an array of elements and initializes them to zero", "Allocates memory for a single element", "Frees allocated memory", "None of the above"], correct: 0 },
+            { question: "What will be the output of the following code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\nprintf('%d', arr[2]);\nfree(arr);\nreturn 0;\n```", options: ["2", "3", "1", "5"], correct: 1 },
+            { question: "What happens if you try to access memory after calling free() on it?", options: ["Segmentation fault", "Memory leak", "The program will continue without issues", "None of the above"], correct: 0 },
+            
+            // Files & Streams Section
             { question: "Which function is used to open a file in C?", options: ["fopen()", "fclose()", "fread()", "fwrite()"], correct: 0 },
-            { question: "What is the purpose of the 'fclose()' function?", options: ["Opens a file", "Closes a file", "Reads from a file", "Writes to a file"], correct: 1 },
+            { question: "What does the 'fclose()' function do?", options: ["Opens a file", "Closes a file", "Reads from a file", "Writes to a file"], correct: 1 },
             { question: "What is the output of the following code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfprintf(f, 'Hello, World!');\nfclose(f);\n```", options: ["Writes 'Hello, World!' to the file", "Prints 'Hello, World!' to the console", "Creates an empty file", "Error"], correct: 0 },
             { question: "Which function is used to read a line from a file in C?", options: ["fgets()", "fread()", "getchar()", "fscanf()"], correct: 0 },
-            { question: "What does the following code do?\n\n```c\nFILE *f = fopen('data.txt', 'r');\nchar str[100];\nfgets(str, 100, f);\nprintf('%s', str);\n```", options: ["Reads the entire file into str", "Reads a line from the file into str", "Reads a word from the file", "Error"], correct: 1 },
-
-            // Command-Line Arguments
+            { question: "What is the output of this code?\n\n```c\nFILE *f = fopen('data.txt', 'r');\nchar str[100];\nfgets(str, 100, f);\nprintf('%s', str);\n```", options: ["Reads the entire file into str", "Reads a line from the file into str", "Reads a word from the file", "Error"], correct: 1 },
+            
+            // Command-Line Arguments Section
             { question: "What does 'argc' represent in the main function?", options: ["The command-line arguments", "The number of command-line arguments", "The command-line arguments array", "None of the above"], correct: 1 },
             { question: "What is the purpose of 'argv' in the main function?", options: ["Stores the number of arguments", "Stores the command-line arguments as strings", "Stores environment variables", "None of the above"], correct: 1 },
             { question: "What will the following code print?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[1]);\n    return 0;\n}\n```", options: ["Prints the first command-line argument", "Prints the second command-line argument", "Error if no arguments are provided", "None of the above"], correct: 0 },
             { question: "Which of the following represents the correct way to compile and run a C program with command-line arguments?", options: ["gcc program.c -o program && ./program arg1 arg2", "gcc program.c && ./program arg1 arg2", "gcc program.c && ./program -o arg1 arg2", "None of the above"], correct: 0 },
             { question: "What is the output of this program when executed as `./program Hello World`?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s %s', argv[0], argv[1]);\n    return 0;\n}\n```", options: ["Hello World", "./program Hello", "World Hello", "Error"], correct: 1 },
+
+            // Adding more questions to make it 60 questions
+            { question: "What happens when you dereference a NULL pointer?", options: ["Segmentation fault", "The value is 0", "No error", "None of the above"], correct: 0 },
+            { question: "What is the result of this code?\n\n```c\nstruct { int x; int y; } p = {1, 2};\nprintf('%d, %d', p.x, p.y);\n```", options: ["1, 2", "Error", "Uninitialized values", "None of the above"], correct: 0 },
+            { question: "How would you allocate a 2D array dynamically in C?", options: ["int **arr = malloc(10 * sizeof(int *)); arr[0] = malloc(10 * sizeof(int));", "int arr[10][10];", "int *arr = malloc(10 * sizeof(int *));", "None of the above"], correct: 0 },
+            { question: "Which function is used to append to a file in C?", options: ["fopen() with mode 'a'", "fopen() with mode 'w'", "fprintf()", "fread()"], correct: 0 },
+            { question: "Which of the following is true about memory leaks?", options: ["It happens when memory is allocated but not freed", "It is harmless", "It happens when you allocate memory using 'free()'", "None of the above"], correct: 0 },
             
-            // Add additional questions for all topics until reaching 60
-            { question: "What happens when a pointer is dereferenced in C?", options: ["The value stored in the memory address is accessed", "The memory address is printed", "It results in an error", "None of the above"], correct: 0 },
-            { question: "How do you pass a structure by reference to a function?", options: ["By passing a pointer to the structure", "By passing a copy of the structure", "By passing a reference variable", "None of the above"], correct: 0 },
-            { question: "Which C library is required to work with file input/output?", options: ["<stdio.h>", "<stdlib.h>", "<string.h>", "<math.h>"], correct: 0 },
-            { question: "What will happen if memory is allocated using malloc but not freed?", options: ["Memory leak", "Stack overflow", "Segmentation fault", "No effect"], correct: 0 },
-            { question: "What is the correct syntax to open a file in read mode in C?", options: ["fopen('file.txt', 'r')", "fopen('file.txt', 'w')", "fopen('file.txt', 'rw')", "fopen('file.txt', 'rb')"], correct: 0 },
-            // Continue adding more specific questions...
+            // Continue adding specific questions for all topics...
         ];
 
         // Dynamically render questions

@@ -15,6 +15,8 @@
         }
         .question {
             margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
         }
         .question h3 {
             margin-bottom: 10px;
@@ -26,9 +28,29 @@
         .options li {
             margin-bottom: 5px;
         }
+        .question.correct {
+            border-color: green;
+        }
+        .question.incorrect {
+            border-color: red;
+        }
         #result {
             margin-top: 20px;
             font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -38,40 +60,74 @@
 
         <!-- Questions dynamically added here -->
 
-        <button type="button" onclick="gradeExam()">Submit</button>
+        <button type="button" onclick="gradeExam()">Submit All</button>
     </form>
 
     <div id="result"></div>
 
     <script>
-        // Array of questions
+        // Expanded array of questions focusing on computational thinking and code analysis
         const questions = [
-            { question: "What does a pointer store in C?", options: [
-                "The value of a variable",
-                "The memory address of a variable",
-                "The size of a variable",
-                "None of the above"], correct: 1 },
-            { question: "What is the purpose of the 'malloc' function?", options: [
-                "To allocate memory dynamically",
-                "To free allocated memory",
-                "To copy memory blocks",
-                "To initialize a variable"], correct: 0 },
-            { question: "Which of the following is used to access members of a structure through a pointer?", options: [
-                "The dot operator (.)",
-                "The arrow operator (->)",
-                "The address-of operator (&)",
-                "None of the above"], correct: 1 },
-            { question: "Which function is used to close a file in C?", options: [
-                "fclose()",
-                "fopen()",
-                "closefile()",
-                "exit()"], correct: 0 },
-            { question: "What does the 'argv' array in the main function represent?", options: [
-                "The number of command-line arguments",
-                "The list of command-line arguments",
-                "The environment variables",
-                "None of the above"], correct: 1 },
-            // Add more questions here to total 60
+            { 
+                question: "What will be the output of the following C code?\n\n```c\nint main() {\n    int a = 5, b = 10;\n    printf('%d', a + b);\n    return 0;\n}\n```", 
+                options: [
+                    "5",
+                    "10",
+                    "15",
+                    "Error"
+                ], 
+                correct: 2 
+            },
+            { 
+                question: "What does the following C code snippet do?\n\n```c\nint main() {\n    int a = 0;\n    if (a == 0) {\n        a = 1;\n    }\n    printf('%d', a);\n    return 0;\n}\n```", 
+                options: [
+                    "Prints 0",
+                    "Prints 1",
+                    "Causes an infinite loop",
+                    "Results in a runtime error"
+                ], 
+                correct: 1 
+            },
+            { 
+                question: "What will be the output of this C code?\n\n```c\nint main() {\n    int a = 5, b = 2;\n    printf('%d', a / b);\n    return 0;\n}\n```", 
+                options: [
+                    "2",
+                    "2.5",
+                    "2.00",
+                    "Error"
+                ], 
+                correct: 0 
+            },
+            { 
+                question: "What is the purpose of the 'break' statement in a C loop?\n\nConsider the following code:\n\n```c\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) break;\n    printf('%d ', i);\n}\n```", 
+                options: [
+                    "Exits the loop when a certain condition is met",
+                    "Continues to the next iteration of the loop",
+                    "Prints '5' after every iteration",
+                    "None of the above"
+                ], 
+                correct: 0 
+            },
+            { 
+                question: "What does the following C code do?\n\n```c\nint main() {\n    int a = 10;\n    int *p = &a;\n    printf('%d', *p);\n    return 0;\n}\n```", 
+                options: [
+                    "Prints the memory address of a",
+                    "Prints the value of a (10)",
+                    "Prints the value of the pointer p",
+                    "Results in a runtime error"
+                ], 
+                correct: 1 
+            },
+            { 
+                question: "What is the output of this code?\n\n```c\nint main() {\n    int arr[] = {1, 2, 3, 4};\n    printf('%d', arr[2]);\n    return 0;\n}\n```", 
+                options: [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ], 
+                correct: 2 
+            }
         ];
 
         // Dynamically render questions
@@ -93,38 +149,58 @@
                         </li>
                     `).join('')}
                 </ul>
+                <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
+                <div id="feedback${index}" class="feedback"></div>
             `;
 
             form.insertBefore(div, form.lastElementChild);
         });
 
+        // Check individual question answer
+        function checkAnswer(index) {
+            const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback${index}`);
+            const correctAnswer = questions[index].correct;
+
+            if (selected) {
+                if (parseInt(selected.value) === correctAnswer) {
+                    feedbackDiv.textContent = "Correct!";
+                    feedbackDiv.style.color = "green";
+                } else {
+                    feedbackDiv.textContent = "Incorrect. Try again!";
+                    feedbackDiv.style.color = "red";
+                }
+            } else {
+                feedbackDiv.textContent = "Please select an answer.";
+                feedbackDiv.style.color = "orange";
+            }
+        }
+
         // Grade the exam
         function gradeExam() {
             let score = 0;
             const totalQuestions = questions.length;
+            let unanswered = 0;
 
             questions.forEach((q, index) => {
                 const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-                if (selected && parseInt(selected.value) === q.correct) {
-                    score++;
+
+                if (selected) {
+                    if (parseInt(selected.value) === q.correct) {
+                        score++;
+                    }
+                } else {
+                    unanswered++;
                 }
             });
 
             // Display results
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `You scored ${score} out of ${totalQuestions}.`; 
+            resultDiv.innerHTML = `You scored ${score} out of ${totalQuestions}.`;
 
-            // Highlight correct/incorrect answers
-            questions.forEach((q, index) => {
-                const questionElement = form.querySelector(`input[name="q${index + 1}"]`).closest('.question');
-                const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-
-                if (selected && parseInt(selected.value) === q.correct) {
-                    questionElement.style.border = "2px solid green";
-                } else {
-                    questionElement.style.border = "2px solid red";
-                }
-            });
+            if (unanswered > 0) {
+                resultDiv.innerHTML += ` You have ${unanswered} unanswered questions.`;
+            }
         }
     </script>
 </body>

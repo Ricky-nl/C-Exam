@@ -26,91 +26,174 @@
         .options li {
             margin-bottom: 5px;
         }
-        button {
-            margin-top: 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
         #result {
             margin-top: 20px;
             font-weight: bold;
+        }
+        .feedback {
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <h1>C Programming MCQ Exam</h1>
-    <form id="examForm"></form>
-    <button type="button" onclick="gradeExam()">Submit All</button>
+    <form id="examForm">
+        <button type="button" onclick="gradeExam()">Submit</button>
+    </form>
+
     <div id="result"></div>
 
     <script>
         const questions = [
-            { question: "What does a pointer store in C?", options: [
-                "The value of a variable",
-                "The memory address of a variable",
-                "The size of a variable",
-                "None of the above"], correct: 1 },
-            { question: "What is the purpose of the 'malloc' function?", options: [
-                "To allocate memory dynamically",
-                "To free allocated memory",
-                "To copy memory blocks",
-                "To initialize a variable"], correct: 0 },
-            // Add the remaining 28 questions here...
+            // Bitwise Operations Section
+            {
+                question: "What is the output of the following code?\n\n```c\nint x = 5;\nint y = 3;\nprintf('%d', x & y);\n```",
+                options: ["7", "1", "5", "0"],
+                correct: 1
+            },
+            {
+                question: "What is the result of the expression `12 | 25`?",
+                options: ["37", "29", "28", "44"],
+                correct: 1
+            },
+            {
+                question: "What will the following code print?\n\n```c\nint a = 8;\nprintf('%d', a << 2);\n```",
+                options: ["32", "16", "8", "64"],
+                correct: 0
+            },
+            {
+                question: "Which of the following will invert all bits of an integer `x` in C?",
+                options: ["x & ~x", "~x", "x ^ x", "None of the above"],
+                correct: 1
+            },
+            {
+                question: "What does the `^` operator do in C?",
+                options: ["Performs bitwise OR", "Performs bitwise AND", "Performs bitwise XOR", "None of the above"],
+                correct: 2
+            },
+
+            // Function Pointers Section
+            {
+                question: "What is a function pointer in C?",
+                options: ["A pointer that points to a variable holding a function", "A pointer that points to a function", "A pointer to an array of functions", "None of the above"],
+                correct: 1
+            },
+            {
+                question: "How do you declare a pointer to a function that takes an `int` and returns `void`?",
+                options: ["void *f(int);", "void (*f)(int);", "int *f(void);", "int (*f)(void);"],
+                correct: 1
+            },
+            {
+                question: "What will this code output?\n\n```c\nvoid print(int x) { printf('%d', x); }\nint main() { void (*fp)(int) = print; fp(10); return 0; }\n```",
+                options: ["Error", "10", "Garbage value", "None of the above"],
+                correct: 1
+            },
+            {
+                question: "Which of the following statements about function pointers is true?",
+                options: ["They can only point to functions returning `int`", "They can be stored in arrays", "They cannot be passed as arguments", "They cannot be assigned"],
+                correct: 1
+            },
+            {
+                question: "What will the following code output?\n\n```c\nvoid fun(int a) { printf('%d', a); }\nvoid execute(void (*fp)(int), int val) { fp(val); }\nint main() { execute(fun, 5); return 0; }\n```",
+                options: ["Error", "5", "Garbage value", "None of the above"],
+                correct: 1
+            },
+
+            // Advanced Structures
+            {
+                question: "What will this code print?\n\n```c\nstruct Point { int x, y; };\nint main() { struct Point p1 = {1, 2}; struct Point p2 = p1; p2.x = 3;\nprintf('%d, %d', p1.x, p1.y);\nreturn 0; }\n```",
+                options: ["1, 2", "3, 2", "Error", "Garbage value"],
+                correct: 0
+            },
+            {
+                question: "What does the `sizeof` operator return for a structure?",
+                options: ["The size of all members combined", "The size including padding", "The size of the first member", "None of the above"],
+                correct: 1
+            },
+            {
+                question: "What will this code output?\n\n```c\nstruct Data { char c; int i; };\nint main() { struct Data d = {'A', 10};\nprintf('%c, %d', d.c, d.i);\nreturn 0; }\n```",
+                options: ["A, 10", "Error", "Garbage value", "None of the above"],
+                correct: 0
+            },
+            {
+                question: "Which of the following is true about nested structures?",
+                options: ["They are not allowed in C", "They must be accessed using pointers", "They allow structures within structures", "None of the above"],
+                correct: 2
+            },
+            {
+                question: "What will this code print?\n\n```c\nstruct Node { int val; struct Node *next; };\nint main() { struct Node n1 = {1, NULL};\nstruct Node n2 = {2, &n1};\nprintf('%d', n2.next->val);\nreturn 0; }\n```",
+                options: ["1", "2", "Error", "None of the above"],
+                correct: 0
+            },
         ];
 
-        // Function to render questions
-        function renderQuestions() {
-            const form = document.getElementById('examForm');
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('question');
+        const form = document.getElementById('examForm');
 
-                const questionTitle = document.createElement('h3');
-                questionTitle.textContent = `${index + 1}. ${q.question}`;
-                questionDiv.appendChild(questionTitle);
+        questions.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.classList.add('question');
 
-                const optionsList = document.createElement('ul');
-                optionsList.classList.add('options');
-                q.options.forEach((option, optIndex) => {
-                    const optionItem = document.createElement('li');
-                    const optionLabel = document.createElement('label');
-                    const optionInput = document.createElement('input');
-                    optionInput.type = 'radio';
-                    optionInput.name = `question-${index}`;
-                    optionInput.value = optIndex;
-                    optionLabel.appendChild(optionInput);
-                    optionLabel.appendChild(document.createTextNode(option));
-                    optionItem.appendChild(optionLabel);
-                    optionsList.appendChild(optionItem);
-                });
+            div.innerHTML = `
+                <h3>${index + 1}. ${q.question}</h3>
+                <ul class="options">
+                    ${q.options.map((option, i) => `
+                        <li>
+                            <label>
+                                <input type="radio" name="q${index + 1}" value="${i}">
+                                ${option}
+                            </label>
+                        </li>
+                    `).join('')}
+                </ul>
+                <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
+                <div class="feedback"></div>
+            `;
 
-                questionDiv.appendChild(optionsList);
-                form.appendChild(questionDiv);
-            });
+            form.insertBefore(div, form.lastElementChild);
+        });
+
+        function checkAnswer(index) {
+            const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
+            const feedbackDiv = form.querySelector(`.question:nth-child(${index + 1}) .feedback`);
+
+            if (selected) {
+                if (parseInt(selected.value) === questions[index].correct) {
+                    feedbackDiv.textContent = "Correct!";
+                    feedbackDiv.style.color = "green";
+                } else {
+                    feedbackDiv.textContent = "Incorrect. Try again!";
+                    feedbackDiv.style.color = "red";
+                }
+            } else {
+                feedbackDiv.textContent = "Please select an answer.";
+                feedbackDiv.style.color = "orange";
+            }
         }
 
-        // Function to grade the exam
         function gradeExam() {
-            const form = document.getElementById('examForm');
             let score = 0;
+            const totalQuestions = questions.length;
+            let unanswered = 0;
+
             questions.forEach((q, index) => {
-                const selected = form.querySelector(`input[name="question-${index}"]:checked`);
-                if (selected && parseInt(selected.value) === q.correct) {
-                    score++;
+                const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
+
+                if (selected) {
+                    if (parseInt(selected.value) === q.correct) {
+                        score++;
+                    }
+                } else {
+                    unanswered++;
                 }
             });
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = `Your score is ${score} out of ${questions.length}.`;
-        }
 
-        // Render the questions on page load
-        renderQuestions();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `You scored ${score} out of ${totalQuestions}.`;
+
+            if (unanswered > 0) {
+                resultDiv.innerHTML += ` You have ${unanswered} unanswered questions.`;
+            }
+        }
     </script>
 </body>
 </html>

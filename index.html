@@ -3,197 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C Programming MCQ Exam</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .question h3 {
-            margin-bottom: 10px;
-        }
-        .options {
-            list-style-type: none;
-            padding: 0;
-        }
-        .options li {
-            margin-bottom: 5px;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .feedback {
-            font-style: italic;
-        }
-    </style>
+    <title>Questionnaire</title>
 </head>
 <body>
-    <h1>C Programming MCQ Exam</h1>
-    <form id="examForm">
-        <button type="button" onclick="gradeExam()">Submit</button>
-    </form>
-
-    <div id="result"></div>
+    <h1>Answer the Questions</h1>
+    <div id="question-container"></div>
 
     <script>
-        const questions = [
-            // Bitwise Operations Section
-            {
-                question: "What is the output of the following code?\n\n```c\nint x = 5;\nint y = 3;\nprintf('%d', x & y);\n```",
-                options: ["7", "1", "5", "0"],
-                correct: 1
-            },
-            {
-                question: "What is the result of the expression `12 | 25`?",
-                options: ["37", "29", "28", "44"],
-                correct: 1
-            },
-            {
-                question: "What will the following code print?\n\n```c\nint a = 8;\nprintf('%d', a << 2);\n```",
-                options: ["32", "16", "8", "64"],
-                correct: 0
-            },
-            {
-                question: "Which of the following will invert all bits of an integer `x` in C?",
-                options: ["x & ~x", "~x", "x ^ x", "None of the above"],
-                correct: 1
-            },
-            {
-                question: "What does the `^` operator do in C?",
-                options: ["Performs bitwise OR", "Performs bitwise AND", "Performs bitwise XOR", "None of the above"],
-                correct: 2
-            },
-
-            // Function Pointers Section
-            {
-                question: "What is a function pointer in C?",
-                options: ["A pointer that points to a variable holding a function", "A pointer that points to a function", "A pointer to an array of functions", "None of the above"],
-                correct: 1
-            },
-            {
-                question: "How do you declare a pointer to a function that takes an `int` and returns `void`?",
-                options: ["void *f(int);", "void (*f)(int);", "int *f(void);", "int (*f)(void);"],
-                correct: 1
-            },
-            {
-                question: "What will this code output?\n\n```c\nvoid print(int x) { printf('%d', x); }\nint main() { void (*fp)(int) = print; fp(10); return 0; }\n```",
-                options: ["Error", "10", "Garbage value", "None of the above"],
-                correct: 1
-            },
-            {
-                question: "Which of the following statements about function pointers is true?",
-                options: ["They can only point to functions returning `int`", "They can be stored in arrays", "They cannot be passed as arguments", "They cannot be assigned"],
-                correct: 1
-            },
-            {
-                question: "What will the following code output?\n\n```c\nvoid fun(int a) { printf('%d', a); }\nvoid execute(void (*fp)(int), int val) { fp(val); }\nint main() { execute(fun, 5); return 0; }\n```",
-                options: ["Error", "5", "Garbage value", "None of the above"],
-                correct: 1
-            },
-
-            // Advanced Structures
-            {
-                question: "What will this code print?\n\n```c\nstruct Point { int x, y; };\nint main() { struct Point p1 = {1, 2}; struct Point p2 = p1; p2.x = 3;\nprintf('%d, %d', p1.x, p1.y);\nreturn 0; }\n```",
-                options: ["1, 2", "3, 2", "Error", "Garbage value"],
-                correct: 0
-            },
-            {
-                question: "What does the `sizeof` operator return for a structure?",
-                options: ["The size of all members combined", "The size including padding", "The size of the first member", "None of the above"],
-                correct: 1
-            },
-            {
-                question: "What will this code output?\n\n```c\nstruct Data { char c; int i; };\nint main() { struct Data d = {'A', 10};\nprintf('%c, %d', d.c, d.i);\nreturn 0; }\n```",
-                options: ["A, 10", "Error", "Garbage value", "None of the above"],
-                correct: 0
-            },
-            {
-                question: "Which of the following is true about nested structures?",
-                options: ["They are not allowed in C", "They must be accessed using pointers", "They allow structures within structures", "None of the above"],
-                correct: 2
-            },
-            {
-                question: "What will this code print?\n\n```c\nstruct Node { int val; struct Node *next; };\nint main() { struct Node n1 = {1, NULL};\nstruct Node n2 = {2, &n1};\nprintf('%d', n2.next->val);\nreturn 0; }\n```",
-                options: ["1", "2", "Error", "None of the above"],
-                correct: 0
-            },
-        ];
-
-        const form = document.getElementById('examForm');
-
-        questions.forEach((q, index) => {
-            const div = document.createElement('div');
-            div.classList.add('question');
-
-            div.innerHTML = `
-                <h3>${index + 1}. ${q.question}</h3>
-                <ul class="options">
-                    ${q.options.map((option, i) => `
-                        <li>
-                            <label>
-                                <input type="radio" name="q${index + 1}" value="${i}">
-                                ${option}
-                            </label>
-                        </li>
-                    `).join('')}
-                </ul>
-                <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
-                <div class="feedback"></div>
-            `;
-
-            form.insertBefore(div, form.lastElementChild);
-        });
-
-        function checkAnswer(index) {
-            const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-            const feedbackDiv = form.querySelector(`.question:nth-child(${index + 1}) .feedback`);
-
-            if (selected) {
-                if (parseInt(selected.value) === questions[index].correct) {
-                    feedbackDiv.textContent = "Correct!";
-                    feedbackDiv.style.color = "green";
-                } else {
-                    feedbackDiv.textContent = "Incorrect. Try again!";
-                    feedbackDiv.style.color = "red";
-                }
-            } else {
-                feedbackDiv.textContent = "Please select an answer.";
-                feedbackDiv.style.color = "orange";
-            }
-        }
-
-        function gradeExam() {
-            let score = 0;
-            const totalQuestions = questions.length;
-            let unanswered = 0;
-
-            questions.forEach((q, index) => {
-                const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-
-                if (selected) {
-                    if (parseInt(selected.value) === q.correct) {
-                        score++;
-                    }
-                } else {
-                    unanswered++;
-                }
+            const theoreticalQuestions = [
+    {
+        question: "What is the main purpose of using pointers in C programming?",
+        correctAnswer: "To reference memory addresses of variables",
+        incorrectAnswers: [
+            "To store large amounts of data",
+            "To increase the execution speed",
+            "To store the result of a computation"
+        ]
+    },
+    {
+        question: "What happens when a pointer is dereferenced?",
+        correctAnswer: "It accesses the value at the memory address the pointer is pointing to",
+        incorrectAnswers: [
+            "It changes the memory address the pointer holds",
+            "It deletes the memory address the pointer is pointing to",
+            "It allocates new memory for the pointer"
+        ]
+    },
+    {
+        question: "What is a potential problem when using uninitialized pointers?",
+        correctAnswer: "It may lead to undefined behavior",
+        incorrectAnswers: [
+            "It automatically points to zero",
+            "It frees allocated memory",
+            "It causes a segmentation fault immediately"
+        ]
+    },
+    {
+        question: "How can you pass a pointer to a function in C?",
+        correctAnswer: "By passing the memory address of a variable",
+        incorrectAnswers: [
+            "By passing the value of the variable",
+            "By passing the size of the variable",
+            "By passing the pointer's data type"
+        ]
+    },
+    {
+        question: "What is the role of the arrow operator (->) in C?",
+        correctAnswer: "It is used to access members of a structure through a pointer",
+        incorrectAnswers: [
+            "It dereferences a pointer",
+            "It allocates memory for a structure",
+            "It accesses a function of a pointer"
+        ]
+    },
+    {
+        question: "How do you declare a structure in C?",
+        correctAnswer: "struct { type member; } name;",
+        incorrectAnswers: [
+            "type struct { member; } name;",
+            "struct name { type member; };",
+            "structure { type member; } name;"
+        ]
+    },
+    {
+        question: "What does the `sizeof` operator do when used with a structure?",
+        correctAnswer: "It returns the size of the structure in bytes",
+        incorrectAnswers: [
+            "It returns the size of each member of the structure",
+            "It returns the size of a pointer to the structure",
+            "It initializes the structure with default values"
+        ]
+    },
+    {
+        question: "How can you initialize a structure in C?",
+        correctAnswer: "By specifying values for each member within curly braces",
+        incorrectAnswers: [
+            "By using the `malloc` function",
+            "By declaring the structure without specifying members",
+            "By using the `sizeof` function"
+        ]
+    },
+    {
+        question: "What does the term 'padding' mean in the context of structures?",
+        correctAnswer: "It refers to the extra memory inserted to align structure members properly",
+        incorrectAnswers: [
+            "It refers to the default values given to structure members",
+            "It refers to the dynamic memory allocated for the structure",
+            "It refers to the unused space in memory that can be freed"
+        ]
+    },
+    {
+        question: "What is the purpose of `malloc()` in C?",
+        correctAnswer: "It allocates memory dynamically at runtime",
+        incorrectAnswers: [
+            "It deallocates memory previously allocated",
+            "It reallocates memory with a new size",
+            "It initializes memory with zeros"
+        ]
+    },
+    {
+        question: "What happens if you attempt to access memory that has been freed using `free()`?",
+        correctAnswer: "It results in undefined behavior",
+        incorrectAnswers: [
+            "It initializes the memory with zero",
+            "It causes the program to crash immediately",
+            "It automatically reallocates the memory"
+        ]
+    },
+    {
+        question: "What is the difference between `malloc()` and `calloc()`?",
+        correctAnswer: "`malloc()` allocates memory without initializing it, `calloc()` initializes the memory to zero",
+        incorrectAnswers: [
+            "`malloc()` is used to deallocate memory, `calloc()` to allocate memory",
+            "`malloc()` allocates memory for a single element, `calloc()` for an array",
+            "`malloc()` allocates memory in bytes, `calloc()` in kilobytes"
+        ]
+    },
+    {
+        question: "Why is it important to check if `malloc()` returned `NULL`?",
+        correctAnswer: "To prevent using uninitialized or inaccessible memory",
+        incorrectAnswers: [
+            "To ensure the allocated memory is the right size",
+            "To free memory that was allocated by mistake",
+            "To speed up memory allocation"
+        ]
+    },
+    {
+        question: "Which function is used to resize a dynamically allocated memory block in C?",
+        correctAnswer: "`realloc()`",
+        incorrectAnswers: [
+            "`malloc()`",
+            "`calloc()`",
+            "`free()`"
+        ]
+    },
+    {
+        question: "What is the role of file pointers in C?",
+        correctAnswer: "They are used to keep track of the current location in a file",
+        incorrectAnswers: [
+            "They store the contents of the file in memory",
+            "They represent the file's path on the disk",
+            "They encrypt the file data"
+        ]
+    },
+    {
+        question: "What does the `fopen()` function do?",
+        correctAnswer: "It opens a file and returns a pointer to it",
+        incorrectAnswers: [
+            "It closes the file",
+            "It creates a new file with a specified name",
+            "It reads data from a file"
+        ]
+    },
+    {
+        question: "What is the difference between the 'r' and 'w' modes in `fopen()`?",
+        correctAnswer: "'r' opens a file for reading, 'w' opens a file for writing (creates a new file if it doesn't exist)",
+        incorrectAnswers: [
+            "'r' reads from a file, 'w' writes to a file without overwriting",
+            "'r' creates a new file, 'w' appends to the file",
+            "'r' opens a file in binary mode, 'w' in text mode"
+        ]
+    },
+    {
+        question: "What does the `fclose()` function do?",
+        correctAnswer: "It closes an open file",
+        incorrectAnswers: [
+            "It saves changes to a file",
+            "It opens a file for writing",
+            "It deletes a file from the filesystem"
+        ]
+    },
+    {
+        question: "What is the purpose of the `fgets()` function?",
+        correctAnswer: "It reads a line of text from a file",
+        incorrectAnswers: [
+            "It writes a string to a file",
+            "It reads binary data from a file",
+            "It appends data to a file"
+        ]
+    },
+    {
+        question: "How can you print the contents of a file in C?",
+        correctAnswer: "By using `fscanf()` or `fgets()` in a loop to read the file and `printf()` to display it",
+        incorrectAnswers: [
+            "By directly using `printf()` with the file pointer",
+            "By using `fread()` to output the file to the console",
+            "By using `fwrite()` to print file contents"
+        ]
+    },
+    {
+        question: "What is `argc` in the context of command-line arguments?",
+        correctAnswer: "The number of command-line arguments passed to the program",
+        incorrectAnswers: [
+            "An array of command-line arguments",
+            "The environment variables passed to the program",
+            "The program's exit status"
+        ]
+    },
+    {
+        question: "What is the purpose of `argv` in the `main()` function?",
+        correctAnswer: "It is an array of strings representing the command-line arguments",
+        incorrectAnswers: [
+            "It stores the program's execution time",
+            "It holds the program's environment variables",
+            "It contains the program's source code"
+        ]
+    },
+    {
+        question: "How do you compile a C program with command-line arguments?",
+        correctAnswer: "Using the command `gcc program.c -o program && ./program arg1 arg2`",
+        incorrectAnswers: [
+            "Using the command `gcc program.c && ./program arg1 arg2`",
+            "Using the command `gcc program.c -o program` only",
+            "Command-line arguments cannot be passed to a compiled C program"
+        ]
+    },
+    {
+        question: "What will be printed by the following code?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[1]);\n    return 0;\n}```",
+        correctAnswer: "The first command-line argument passed to the program",
+        incorrectAnswers: [
+            "The second command-line argument",
+            "An error if no arguments are passed",
+            "The program's name"
+        ]
+    },
+    {
+        question: "What happens if you pass too few arguments to a program expecting them in `argv[]`?",
+        correctAnswer: "It may cause an out-of-bounds access, leading to undefined behavior",
+        incorrectAnswers: [
+            "It causes a compile-time error",
+            "The program will automatically handle the missing arguments",
+            "It initializes missing arguments to null values"
+        ]
+    },
+    {
+        question: "What is the result of accessing `argv[0]`?",
+        correctAnswer: "It contains the name of the program being executed",
+        incorrectAnswers: [
+            "It contains the first command-line argument",
+            "It contains the number of arguments",
+            "It is always empty"
+        ]
+    }
+];
+        // Function to display the questions
+        function displayQuestions() {
+            const container = document.getElementById('question-container');
+            theoreticalQuestions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.innerHTML = `
+                    <h2>Question ${index + 1}: ${question.question}</h2>
+                    <ul>
+                        <li>${question.correctAnswer}</li>
+                        ${question.incorrectAnswers.map(answer => `<li>${answer}</li>`).join('')}
+                    </ul>
+                `;
+                container.appendChild(questionElement);
             });
-
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `You scored ${score} out of ${totalQuestions}.`;
-
-            if (unanswered > 0) {
-                resultDiv.innerHTML += ` You have ${unanswered} unanswered questions.`;
-            }
         }
+
+        // Call the display function when the page loads
+        displayQuestions();
     </script>
 </body>
 </html>

@@ -3,249 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire</title>
+    <title>MCQ Exam</title>
 </head>
 <body>
     <h1>Answer the Questions</h1>
-    <div id="question-container"></div>
+    <form id="quiz-form">
+        <div id="question-container"></div>
+        <button type="submit">Submit All</button>
+    </form>
+    <h2 id="score" style="display: none;"></h2>
 
     <script>
-            const theoreticalQuestions = [
-    {
-        question: "What is the main purpose of using pointers in C programming?",
-        correctAnswer: "To reference memory addresses of variables",
-        incorrectAnswers: [
-            "To store large amounts of data",
-            "To increase the execution speed",
-            "To store the result of a computation"
-        ]
-    },
-    {
-        question: "What happens when a pointer is dereferenced?",
-        correctAnswer: "It accesses the value at the memory address the pointer is pointing to",
-        incorrectAnswers: [
-            "It changes the memory address the pointer holds",
-            "It deletes the memory address the pointer is pointing to",
-            "It allocates new memory for the pointer"
-        ]
-    },
-    {
-        question: "What is a potential problem when using uninitialized pointers?",
-        correctAnswer: "It may lead to undefined behavior",
-        incorrectAnswers: [
-            "It automatically points to zero",
-            "It frees allocated memory",
-            "It causes a segmentation fault immediately"
-        ]
-    },
-    {
-        question: "How can you pass a pointer to a function in C?",
-        correctAnswer: "By passing the memory address of a variable",
-        incorrectAnswers: [
-            "By passing the value of the variable",
-            "By passing the size of the variable",
-            "By passing the pointer's data type"
-        ]
-    },
-    {
-        question: "What is the role of the arrow operator (->) in C?",
-        correctAnswer: "It is used to access members of a structure through a pointer",
-        incorrectAnswers: [
-            "It dereferences a pointer",
-            "It allocates memory for a structure",
-            "It accesses a function of a pointer"
-        ]
-    },
-    {
-        question: "How do you declare a structure in C?",
-        correctAnswer: "struct { type member; } name;",
-        incorrectAnswers: [
-            "type struct { member; } name;",
-            "struct name { type member; };",
-            "structure { type member; } name;"
-        ]
-    },
-    {
-        question: "What does the `sizeof` operator do when used with a structure?",
-        correctAnswer: "It returns the size of the structure in bytes",
-        incorrectAnswers: [
-            "It returns the size of each member of the structure",
-            "It returns the size of a pointer to the structure",
-            "It initializes the structure with default values"
-        ]
-    },
-    {
-        question: "How can you initialize a structure in C?",
-        correctAnswer: "By specifying values for each member within curly braces",
-        incorrectAnswers: [
-            "By using the `malloc` function",
-            "By declaring the structure without specifying members",
-            "By using the `sizeof` function"
-        ]
-    },
-    {
-        question: "What does the term 'padding' mean in the context of structures?",
-        correctAnswer: "It refers to the extra memory inserted to align structure members properly",
-        incorrectAnswers: [
-            "It refers to the default values given to structure members",
-            "It refers to the dynamic memory allocated for the structure",
-            "It refers to the unused space in memory that can be freed"
-        ]
-    },
-    {
-        question: "What is the purpose of `malloc()` in C?",
-        correctAnswer: "It allocates memory dynamically at runtime",
-        incorrectAnswers: [
-            "It deallocates memory previously allocated",
-            "It reallocates memory with a new size",
-            "It initializes memory with zeros"
-        ]
-    },
-    {
-        question: "What happens if you attempt to access memory that has been freed using `free()`?",
-        correctAnswer: "It results in undefined behavior",
-        incorrectAnswers: [
-            "It initializes the memory with zero",
-            "It causes the program to crash immediately",
-            "It automatically reallocates the memory"
-        ]
-    },
-    {
-        question: "What is the difference between `malloc()` and `calloc()`?",
-        correctAnswer: "`malloc()` allocates memory without initializing it, `calloc()` initializes the memory to zero",
-        incorrectAnswers: [
-            "`malloc()` is used to deallocate memory, `calloc()` to allocate memory",
-            "`malloc()` allocates memory for a single element, `calloc()` for an array",
-            "`malloc()` allocates memory in bytes, `calloc()` in kilobytes"
-        ]
-    },
-    {
-        question: "Why is it important to check if `malloc()` returned `NULL`?",
-        correctAnswer: "To prevent using uninitialized or inaccessible memory",
-        incorrectAnswers: [
-            "To ensure the allocated memory is the right size",
-            "To free memory that was allocated by mistake",
-            "To speed up memory allocation"
-        ]
-    },
-    {
-        question: "Which function is used to resize a dynamically allocated memory block in C?",
-        correctAnswer: "`realloc()`",
-        incorrectAnswers: [
-            "`malloc()`",
-            "`calloc()`",
-            "`free()`"
-        ]
-    },
-    {
-        question: "What is the role of file pointers in C?",
-        correctAnswer: "They are used to keep track of the current location in a file",
-        incorrectAnswers: [
-            "They store the contents of the file in memory",
-            "They represent the file's path on the disk",
-            "They encrypt the file data"
-        ]
-    },
-    {
-        question: "What does the `fopen()` function do?",
-        correctAnswer: "It opens a file and returns a pointer to it",
-        incorrectAnswers: [
-            "It closes the file",
-            "It creates a new file with a specified name",
-            "It reads data from a file"
-        ]
-    },
-    {
-        question: "What is the difference between the 'r' and 'w' modes in `fopen()`?",
-        correctAnswer: "'r' opens a file for reading, 'w' opens a file for writing (creates a new file if it doesn't exist)",
-        incorrectAnswers: [
-            "'r' reads from a file, 'w' writes to a file without overwriting",
-            "'r' creates a new file, 'w' appends to the file",
-            "'r' opens a file in binary mode, 'w' in text mode"
-        ]
-    },
-    {
-        question: "What does the `fclose()` function do?",
-        correctAnswer: "It closes an open file",
-        incorrectAnswers: [
-            "It saves changes to a file",
-            "It opens a file for writing",
-            "It deletes a file from the filesystem"
-        ]
-    },
-    {
-        question: "What is the purpose of the `fgets()` function?",
-        correctAnswer: "It reads a line of text from a file",
-        incorrectAnswers: [
-            "It writes a string to a file",
-            "It reads binary data from a file",
-            "It appends data to a file"
-        ]
-    },
-    {
-        question: "How can you print the contents of a file in C?",
-        correctAnswer: "By using `fscanf()` or `fgets()` in a loop to read the file and `printf()` to display it",
-        incorrectAnswers: [
-            "By directly using `printf()` with the file pointer",
-            "By using `fread()` to output the file to the console",
-            "By using `fwrite()` to print file contents"
-        ]
-    },
-    {
-        question: "What is `argc` in the context of command-line arguments?",
-        correctAnswer: "The number of command-line arguments passed to the program",
-        incorrectAnswers: [
-            "An array of command-line arguments",
-            "The environment variables passed to the program",
-            "The program's exit status"
-        ]
-    },
-    {
-        question: "What is the purpose of `argv` in the `main()` function?",
-        correctAnswer: "It is an array of strings representing the command-line arguments",
-        incorrectAnswers: [
-            "It stores the program's execution time",
-            "It holds the program's environment variables",
-            "It contains the program's source code"
-        ]
-    },
-    {
-        question: "How do you compile a C program with command-line arguments?",
-        correctAnswer: "Using the command `gcc program.c -o program && ./program arg1 arg2`",
-        incorrectAnswers: [
-            "Using the command `gcc program.c && ./program arg1 arg2`",
-            "Using the command `gcc program.c -o program` only",
-            "Command-line arguments cannot be passed to a compiled C program"
-        ]
-    },
-    {
-        question: "What will be printed by the following code?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[1]);\n    return 0;\n}```",
-        correctAnswer: "The first command-line argument passed to the program",
-        incorrectAnswers: [
-            "The second command-line argument",
-            "An error if no arguments are passed",
-            "The program's name"
-        ]
-    },
-    {
-        question: "What happens if you pass too few arguments to a program expecting them in `argv[]`?",
-        correctAnswer: "It may cause an out-of-bounds access, leading to undefined behavior",
-        incorrectAnswers: [
-            "It causes a compile-time error",
-            "The program will automatically handle the missing arguments",
-            "It initializes missing arguments to null values"
-        ]
-    },
-    {
-        question: "What is the result of accessing `argv[0]`?",
-        correctAnswer: "It contains the name of the program being executed",
-        incorrectAnswers: [
-            "It contains the first command-line argument",
-            "It contains the number of arguments",
-            "It is always empty"
-        ]
-    }
+        const theoreticalQuestions = [
+  {
+    question: "What will be the output of the following code? \n\nint* ptr = malloc(sizeof(int)); *ptr = 10; printf('%d', *ptr);",
+    correctAnswer: "10",
+    incorrectAnswers: [
+      "0",
+      "NULL",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "Given the following struct definition: \n\nstruct Point { int x, y; }; struct Point p1 = {5, 10}; What will be printed by printf('%d', p1.x);",
+    correctAnswer: "5",
+    incorrectAnswers: [
+      "10",
+      "Segmentation fault",
+      "0"
+    ]
+  },
+  {
+    question: "In C, what does the '->' operator do when used with pointers to structures?",
+    correctAnswer: "Accesses a member of a structure through a pointer",
+    incorrectAnswers: [
+      "Dereferences the pointer",
+      "Allocates memory for the structure",
+      "Accesses the memory address of the structure"
+    ]
+  },
+  {
+    question: "What is the purpose of 'malloc' in C?",
+    correctAnswer: "Allocates dynamic memory at runtime",
+    incorrectAnswers: [
+      "Frees memory allocated by malloc",
+      "Allocates memory for global variables",
+      "Initializes variables to default values"
+    ]
+  },
+  {
+    question: "Given the following code snippet: \n\nFILE *f = fopen('file.txt', 'r'); char buffer[100]; fgets(buffer, sizeof(buffer), f); What is the purpose of fgets?",
+    correctAnswer: "Reads a line of text from a file",
+    incorrectAnswers: [
+      "Writes a line of text to a file",
+      "Reads binary data from a file",
+      "Closes the file"
+    ]
+  },
+  {
+    question: "What happens if you try to access a pointer that points to NULL?",
+    correctAnswer: "It results in a segmentation fault",
+    incorrectAnswers: [
+      "It returns a value of zero",
+      "It prints a warning message",
+      "The program executes normally"
+    ]
+  },
+  {
+    question: "Given the following code: \n\nint main(int argc, char *argv[]) { printf('%d', argc); return 0; } What will be the output if the program is run with two command-line arguments?",
+    correctAnswer: "3",
+    incorrectAnswers: [
+      "2",
+      "1",
+      "4"
+    ]
+  },
+  {
+    question: "What will happen if you forget to free dynamically allocated memory using 'free()' in C?",
+    correctAnswer: "Memory leak",
+    incorrectAnswers: [
+      "Segmentation fault",
+      "Buffer overflow",
+      "Memory corruption"
+    ]
+  },
+  {
+    question: "What is the correct way to check if a file was successfully opened using 'fopen'?",
+    correctAnswer: "Check if the file pointer is not NULL",
+    incorrectAnswers: [
+      "Check if the file pointer is 0",
+      "Check if 'fopen' returns an integer value",
+      "Check if 'fclose' returns 0"
+    ]
+  },
+  {
+    question: "In the following code: \n\nint a = 10; int *p = &a; What will the expression '*p' evaluate to?",
+    correctAnswer: "10",
+    incorrectAnswers: [
+      "NULL",
+      "The memory address of 'a'",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What is the output of the following code? \n\nint* ptr = NULL; printf('%p', ptr);",
+    correctAnswer: "0x0 (NULL address)",
+    incorrectAnswers: [
+      "Segmentation fault",
+      "Random memory address",
+      "0"
+    ]
+  },
+  {
+    question: "What does the following code print? \n\nint arr[] = {1, 2, 3}; int* p = arr; printf('%d', *(p + 2));",
+    correctAnswer: "3",
+    incorrectAnswers: [
+      "1",
+      "2",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What is the result of dereferencing an uninitialized pointer?",
+    correctAnswer: "Undefined behavior",
+    incorrectAnswers: [
+      "Zero",
+      "NULL",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What happens when a file opened with 'fopen' is not closed properly?",
+    correctAnswer: "It may lead to resource leakage",
+    incorrectAnswers: [
+      "The file will be deleted",
+      "It will cause an immediate crash",
+      "Nothing will happen"
+    ]
+  },
+  {
+    question: "What does the command 'fgets(buffer, sizeof(buffer), stdin)' do in C?",
+    correctAnswer: "Reads a line of text from the standard input into the buffer",
+    incorrectAnswers: [
+      "Writes a line of text to the standard input",
+      "Reads binary data from the standard input",
+      "Stops the program execution"
+    ]
+  },
+  {
+    question: "Given the following code: \n\nchar* str = 'Hello'; printf('%s', str + 2); What will be the output?",
+    correctAnswer: "llo",
+    incorrectAnswers: [
+      "Hel",
+      "Hello",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "Which of the following will result in a segmentation fault? \n\nA) Accessing an array out of bounds \nB) Dereferencing a NULL pointer \nC) Both A and B",
+    correctAnswer: "C) Both A and B",
+    incorrectAnswers: [
+      "A) Accessing an array out of bounds",
+      "B) Dereferencing a NULL pointer",
+      "None of the above"
+    ]
+  },
+  {
+    question: "Given the following declaration: \n\nint* ptr = malloc(sizeof(int)); *ptr = 20; free(ptr); What happens if 'ptr' is dereferenced after the call to free?",
+    correctAnswer: "It results in undefined behavior",
+    incorrectAnswers: [
+      "It prints the value 20",
+      "It prints NULL",
+      "It causes a segmentation fault"
+    ]
+  },
+  {
+    question: "What is the purpose of the 'sizeof' operator in C?",
+    correctAnswer: "To determine the size, in bytes, of a variable or type",
+    incorrectAnswers: [
+      "To allocate memory dynamically",
+      "To assign a value to a variable",
+      "To check if a pointer is NULL"
+    ]
+  },
+  {
+    question: "What is the return value of 'fopen' if the file is opened successfully?",
+    correctAnswer: "A pointer to the file stream",
+    incorrectAnswers: [
+      "0",
+      "NULL",
+      "A file descriptor"
+    ]
+  },
+  {
+    question: "What does the expression 'argc' represent in the main function signature 'int main(int argc, char *argv[])'?",
+    correctAnswer: "The number of command-line arguments passed to the program",
+    incorrectAnswers: [
+      "The first command-line argument",
+      "The memory address of the arguments",
+      "The length of the argument string"
+    ]
+  },
+  {
+    question: "What happens if you pass a NULL pointer to the 'fgets' function?",
+    correctAnswer: "It causes undefined behavior",
+    incorrectAnswers: [
+      "It reads an empty line",
+      "It causes a segmentation fault",
+      "It returns an empty string"
+    ]
+  },
+  {
+    question: "What will be the output of the following code? \n\nint x = 5; int* ptr = &x; printf('%d', *ptr);",
+    correctAnswer: "5",
+    incorrectAnswers: [
+      "0",
+      "Segmentation fault",
+      "The address of x"
+    ]
+  },
+  {
+    question: "What happens when 'fclose' is called on a file that was never opened?",
+    correctAnswer: "It results in undefined behavior",
+    incorrectAnswers: [
+      "It does nothing",
+      "It causes a segmentation fault",
+      "It prints an error message"
+    ]
+  },
+  {
+    question: "What will the following code print? \n\nchar* str = 'Hello'; printf('%c', *(str + 1));",
+    correctAnswer: "e",
+    incorrectAnswers: [
+      "H",
+      "l",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What is the output of the following code? \n\nchar* ptr = 'Goodbye'; printf('%s', ptr + 4);",
+    correctAnswer: "bye",
+    incorrectAnswers: [
+      "Goodbye",
+      "o",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What is the effect of calling 'free' on a NULL pointer?",
+    correctAnswer: "It has no effect",
+    incorrectAnswers: [
+      "It causes a segmentation fault",
+      "It frees the memory for the program",
+      "It causes memory corruption"
+    ]
+  },
+  {
+    question: "What does the following code print? \n\nint a = 10; int* p = &a; *p = 20; printf('%d', a);",
+    correctAnswer: "20",
+    incorrectAnswers: [
+      "10",
+      "0",
+      "Segmentation fault"
+    ]
+  },
+  {
+    question: "What happens when you access an element beyond the size of a dynamically allocated array?",
+    correctAnswer: "It results in undefined behavior",
+    incorrectAnswers: [
+      "The program crashes immediately",
+      "The array is resized automatically",
+      "The element is initialized to zero"
+    ]
+  },
+  {
+    question: "What is the correct way to check if a pointer has been allocated memory using 'malloc'?",
+    correctAnswer: "Check if the pointer is not NULL",
+    incorrectAnswers: [
+      "Check if the pointer is 0",
+      "Check if the pointer is greater than zero",
+      "Check if 'malloc' returns a non-zero value"
+    ]
+  }
 ];
+
+
         // Function to display the questions
         function displayQuestions() {
             const container = document.getElementById('question-container');
@@ -254,13 +296,64 @@
                 questionElement.innerHTML = `
                     <h2>Question ${index + 1}: ${question.question}</h2>
                     <ul>
-                        <li>${question.correctAnswer}</li>
-                        ${question.incorrectAnswers.map(answer => `<li>${answer}</li>`).join('')}
+                        ${[question.correctAnswer, ...question.incorrectAnswers]
+                            .sort(() => Math.random() - 0.5)
+                            .map((answer, i) => `
+                                <li>
+                                    <input type="radio" name="question-${index}" value="${answer}" id="question-${index}-answer-${i}">
+                                    <label for="question-${index}-answer-${i}">${answer}</label>
+                                </li>
+                            `).join('')}
                     </ul>
+                    <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
+                    <div id="result-${index}" style="display:none;"></div>
                 `;
                 container.appendChild(questionElement);
             });
         }
+
+        // Function to check the answer for a specific question
+        function checkAnswer(index) {
+            const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
+            const resultElement = document.getElementById(`result-${index}`);
+            
+            if (selectedAnswer) {
+                if (selectedAnswer.value === theoreticalQuestions[index].correctAnswer) {
+                    resultElement.textContent = "Correct!";
+                    resultElement.style.color = 'green';
+                } else {
+                    resultElement.textContent = "Incorrect.";
+                    resultElement.style.color = 'red';
+                }
+                resultElement.style.display = 'block';
+            } else {
+                resultElement.textContent = "Please select an answer.";
+                resultElement.style.color = 'orange';
+                resultElement.style.display = 'block';
+            }
+        }
+
+        // Function to handle form submission and calculate score
+        function handleSubmit(event) {
+            event.preventDefault();
+            let score = 0;
+            
+            theoreticalQuestions.forEach((question, index) => {
+                const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
+                
+                if (selectedAnswer && selectedAnswer.value === question.correctAnswer) {
+                    score++;
+                }
+            });
+
+            // Display the score
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `Your score is: ${score} out of ${theoreticalQuestions.length}`;
+            scoreElement.style.display = 'block';
+        }
+
+        // Set up the form submit handler
+        document.getElementById('quiz-form').addEventListener('submit', handleSubmit);
 
         // Call the display function when the page loads
         displayQuestions();

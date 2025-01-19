@@ -15,6 +15,9 @@
         }
         .question {
             margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         .question h3 {
             margin-bottom: 10px;
@@ -30,69 +33,181 @@
             margin-top: 20px;
             font-weight: bold;
         }
-        .feedback {
-            font-style: italic;
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
         }
     </style>
 </head>
 <body>
     <h1>C Programming MCQ Exam</h1>
     <form id="examForm">
+
         <!-- Questions dynamically added here -->
-        <button type="button" onclick="gradeExam()">Submit</button>
+
+        <button type="button" onclick="gradeExam()">Submit All</button>
     </form>
 
     <div id="result"></div>
 
     <script>
-        // Array of questions (60 total)
-        <script>
-const questions = [
-    // Pointers Section (Advanced)
-    { question: "What will the following code output?\n\n```c\nint x = 5, *p = &x, **q = &p;\n**q = 10;\nprintf('%d', x);\n```", options: ["10", "5", "Segmentation fault", "Error"], correct: 0 },
-    { question: "What happens when you try to dereference a pointer that was initialized to an invalid memory address?", options: ["Segmentation fault", "The program continues without issues", "The pointer is set to NULL", "None of the above"], correct: 0 },
-    { question: "What will be the output of the following code?\n\n```c\nint *ptr = NULL;\nif (ptr) {\n    printf('True');\n} else {\n    printf('False');\n}\n```", options: ["True", "False", "Error", "Segmentation fault"], correct: 1 },
-    
-    // Structures Section (Advanced)
-    { question: "Given the following structure:\n\n```c\nstruct Person {\n    char name[100];\n    int age;\n    struct Address *address;\n};\nstruct Address {\n    char street[100];\n    char city[100];\n};\n``` What is the proper way to dynamically allocate memory for both the 'Person' and 'Address' structures?", options: ["struct Person *p = malloc(sizeof(struct Person)); p->address = malloc(sizeof(struct Address));", "struct Person *p = malloc(sizeof(struct Person));", "struct Address *a = malloc(sizeof(struct Address));", "None of the above"], correct: 0 },
-    { question: "Which of the following statements is correct about the 'sizeof' operator in C?", options: ["It gives the size of a variable or data type", "It cannot be used with structures", "It only works with pointers", "None of the above"], correct: 0 },
-    
-    // Dynamic Memory Section (Advanced)
-    { question: "Which function should be used to change the size of previously allocated memory?", options: ["malloc()", "free()", "realloc()", "calloc()"], correct: 2 },
-    { question: "What happens when 'malloc' is called but the system runs out of memory?", options: ["It returns NULL", "It throws an error", "It returns a random address", "None of the above"], correct: 0 },
-    { question: "What will be the result of this code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\narr = realloc(arr, 10 * sizeof(int));\nprintf('%d', arr[8]);\n```", options: ["Unpredictable behavior", "0", "9", "Segmentation fault"], correct: 0 },
-    
-    // Files & Streams Section (Advanced)
-    { question: "What happens when you try to write to a file opened in 'r' mode?", options: ["The file is created", "The file is overwritten", "The program crashes", "Nothing happens"], correct: 3 },
-    { question: "What is the output of the following code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfputs('Hello', f);\nfseek(f, 0, SEEK_SET);\nfputs('World', f);\nfclose(f);\n```", options: ["World", "Hello", "HelloWorld", "Error"], correct: 0 },
-    { question: "What will happen if you attempt to read beyond the end of a file using 'fgets()'?", options: ["It will return NULL", "It will return the last read value", "It will cause an infinite loop", "None of the above"], correct: 0 },
-    
-    // Command-Line Arguments Section (Advanced)
-    { question: "What will be the result of this code?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[argc]);\n    return 0;\n}\n```", options: ["Undefined behavior", "The last command-line argument", "NULL", "Error"], correct: 0 },
-    { question: "Which of the following is correct regarding 'argc' and 'argv'?", options: ["'argc' gives the number of arguments including the program name", "'argc' is always 0", "'argv' contains the number of command-line arguments", "None of the above"], correct: 0 },
-    { question: "What does the following code output when run with `./program 1 2 3`?\n\n```c\nint main(int argc, char *argv[]) {\n    for (int i = 1; i < argc; i++) {\n        printf('%s ', argv[i]);\n    }\n    return 0;\n}\n```", options: ["1 2 3", "1 2", "2 3", "Error"], correct: 0 },
+        // Array of questions
+        const questions = [
+            { question: "What does a pointer store in C?", options: [
+                "The value of a variable",
+                "The memory address of a variable",
+                "The size of a variable",
+                "None of the above"], correct: 1 },
 
-    // Challenging questions on Pointers, Dynamic Memory, and Structures
-    { question: "What is the output of this code?\n\n```c\nint *p = malloc(sizeof(int));\n*p = 5;\nfree(p);\np = NULL;\nprintf('%d', *p);\n```", options: ["Error", "Segmentation fault", "5", "NULL"], correct: 1 },
-    { question: "What will happen if you try to access memory that has been freed and is not NULL?", options: ["Segmentation fault", "The program will continue", "It will return the last allocated value", "None of the above"], correct: 0 },
-    { question: "What will the following code print?\n\n```c\nstruct Point { int x, y; };\nstruct Point p = {1, 2};\nstruct Point *ptr = &p;\nprintf('%d %d', ptr->x, ptr->y);\n```", options: ["1 2", "2 1", "Segmentation fault", "None of the above"], correct: 0 },
-    
-    // More Advanced Dynamic Memory Questions
-    { question: "What is the behavior of the following code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfree(arr);\narr[0] = 10;\n```", options: ["Memory leak", "Segmentation fault", "Valid behavior", "None of the above"], correct: 1 },
-    { question: "What happens when you use 'malloc' for an array of structures, and later access a member of that structure without initializing it?", options: ["It holds a garbage value", "It will be automatically initialized to zero", "It will result in undefined behavior", "None of the above"], correct: 0 },
-    { question: "What happens when a dynamically allocated array is resized using 'realloc', and the new size is smaller than the original?", options: ["Data may be lost", "Memory is freed", "Array is cleared", "No effect"], correct: 0 },
+            { question: "What is the purpose of the 'malloc' function?", options: [
+                "To allocate memory dynamically",
+                "To free allocated memory",
+                "To copy memory blocks",
+                "To initialize a variable"], correct: 0 },
 
-    // Pointers and Dynamic Memory combined
-    { question: "What is the result of this code?\n\n```c\nint *p = malloc(sizeof(int) * 3);\np[0] = 1; p[1] = 2; p[2] = 3;\nint *q = realloc(p, sizeof(int) * 2);\nprintf('%d', q[2]);\n```", options: ["Error", "3", "Undefined behavior", "Segmentation fault"], correct: 0 },
-    
-    // Challenging Command-Line Arguments questions
-    { question: "What will the following code output if executed as `./program arg1 arg2`?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s %s', argv[0], argv[argc - 1]);\n    return 0;\n}\n```", options: ["./program arg2", "arg1 arg2", "./program arg1", "Error"], correct: 0 },
-    { question: "How do you access the first command-line argument (excluding the program name)?", options: ["argv[0]", "argv[1]", "argv[argc]", "None of the above"], correct: 1 },
+            { question: "What happens when you try to dereference a pointer that was initialized to an invalid memory address?", options: [
+                "Segmentation fault",
+                "The program continues without issues",
+                "The pointer is set to NULL",
+                "None of the above"], correct: 0 },
 
-    // Final Challenging Question on Pointers and Memory
-    { question: "What happens when you attempt to dereference a pointer that was allocated memory via 'malloc', but was never initialized?", options: ["It may contain a random value", "It will be set to zero", "It will cause a segmentation fault", "None of the above"], correct: 0 },
-];
-</script>
+            { question: "What is the output of this code?\n\n```c\nint x = 5, *p = &x, **q = &p;\n**q = 10;\nprintf('%d', x);\n```", options: [
+                "10", "5", "Segmentation fault", "Error"], correct: 0 },
+
+            { question: "What happens when 'malloc' is called but the system runs out of memory?", options: [
+                "It returns NULL", "It throws an error", "It returns a random address", "None of the above"], correct: 0 },
+
+            { question: "Which function should be used to change the size of previously allocated memory?", options: [
+                "malloc()", "free()", "realloc()", "calloc()"], correct: 2 },
+
+            { question: "What will happen if you attempt to read beyond the end of a file using 'fgets()'?", options: [
+                "It will return NULL", "It will return the last read value", "It will cause an infinite loop", "None of the above"], correct: 0 },
+
+            { question: "What is the output of this code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfputs('Hello', f);\nfseek(f, 0, SEEK_SET);\nfputs('World', f);\nfclose(f);\n```", options: [
+                "World", "Hello", "HelloWorld", "Error"], correct: 0 },
+
+            { question: "What does the following code output when run with `./program 1 2 3`?\n\n```c\nint main(int argc, char *argv[]) {\n    for (int i = 1; i < argc; i++) {\n        printf('%s ', argv[i]);\n    }\n    return 0;\n}\n```", options: [
+                "1 2 3", "1 2", "2 3", "Error"], correct: 0 },
+
+            { question: "What is the behavior of the following code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfree(arr);\narr[0] = 10;\n```", options: [
+                "Memory leak", "Segmentation fault", "Valid behavior", "None of the above"], correct: 1 },
+
+            { question: "How do you properly open a binary file for reading in C?", options: [
+                "fopen('file.bin', 'r')",
+                "fopen('file.bin', 'rb')",
+                "fopen('file.bin', 'wb')",
+                "fopen('file.bin', 'r+b')"], correct: 1 },
+
+            { question: "What is the output of this code?\n\n```c\nint arr[3] = {10, 20, 30};\nint *p = arr;\nprintf('%d', *(p + 1));\n```", options: [
+                "10", "20", "30", "Segmentation fault"], correct: 1 },
+
+            { question: "What happens if you call 'free()' on a NULL pointer?", options: [
+                "The program crashes", "Nothing happens", "The memory is released", "It throws an error"], correct: 1 },
+
+            { question: "What is the purpose of 'argv[0]' in the main function?", options: [
+                "It stores the name of the program",
+                "It stores the first command-line argument",
+                "It stores the total count of arguments",
+                "It stores the last command-line argument"], correct: 0 },
+
+            { question: "What will this code output?\n\n```c\nchar str[] = "Hello";\nprintf('%c', *(str + 1));\n```", options: [
+                "H", "e", "l", "o"], correct: 1 },
+
+            { question: "What does 'fclose()' return on success?", options: [
+                "0", "1", "EOF", "None of the above"], correct: 0 },
+
+            { question: "Which of the following is a valid declaration of a pointer to a function?", options: [
+                "int *f();", "int (*f)();", "int *(*f)();", "None of the above"], correct: 1 },
+
+            { question: "What is the output of this code?\n\n```c\nstruct Point { int x, y; } p = {10, 20};\nprintf('%d', p.y);\n```", options: [
+                "10", "20", "Error", "Undefined behavior"], correct: 1 },
+
+            { question: "What happens when a local variable's address is returned from a function?", options: [
+                "Segmentation fault",
+                "Undefined behavior",
+                "The address remains valid",
+                "The variable is copied"], correct: 1 },
+
+            { question: "What is the correct way to dynamically allocate a 2D array in C?", options: [
+                "int **arr = malloc(rows * cols * sizeof(int));",
+                "int **arr = malloc(rows * sizeof(int*)); for (int i = 0; i < rows; i++) arr[i] = malloc(cols * sizeof(int));",
+                "int arr[rows][cols] = malloc(rows * cols * sizeof(int));",
+                "None of the above"], correct: 1 },
+
+            { question: "What does 'argc' represent in the main function?", options: [
+                "The total length of all arguments",
+                "The total count of arguments",
+                "The size of the first argument",
+                "None of the above"], correct: 1 },
+
+            { question: "What is the correct syntax to define a pointer to a structure in C?", options: [
+                "struct Point *p;",
+                "Point *p;",
+                "struct Point p;",
+                "All of the above"], correct: 0 },
+
+            { question: "What is the purpose of the 'sizeof' operator in C?", options: [
+                "To find the length of a string",
+                "To determine the size of a variable or type",
+                "To allocate memory dynamically",
+                "None of the above"], correct: 1 },
+
+            { question: "What is the difference between 'calloc()' and 'malloc()'?", options: [
+                "calloc() initializes allocated memory to zero, malloc() does not",
+                "calloc() is faster than malloc()",
+                "malloc() initializes allocated memory to zero, calloc() does not",
+                "Both perform the same task"], correct: 0 },
+
+            { question: "What is the purpose of the 'feof()' function?", options: [
+                "To check if the end of a file has been reached",
+                "To close a file",
+                "To check if a file exists",
+                "None of the above"], correct: 0 },
+
+            { question: "What is the output of this code?\n\n```c\nint arr[5] = {1, 2, 3, 4, 5};\nprintf('%d', arr[5]);\n```", options: [
+                "Segmentation fault", "0", "Undefined behavior", "Error"], correct: 2 },
+
+            { question: "How do you properly deallocate a dynamically allocated 2D array?", options: [
+                "Use free() on the entire array",
+                "Free each row using free(), then free the array of pointers",
+                "Call free() on the first row",
+                "None of the above"], correct: 1 },
+
+            { question: "What is the output of this code?\n\n```c\nint x = 10;\nint *p = &x;\n*p = 20;\nprintf('%d', x);\n```", options: [
+                "10", "20", "Error", "Undefined behavior"], correct: 1 },
+
+            { question: "What does 'fprintf()' do?", options: [
+                "Writes formatted output to a file",
+                "Writes formatted output to the console",
+                "Reads formatted input from a file",
+                "None of the above"], correct: 0 },
+
+            { question: "What is the correct way to pass a pointer to a function?", options: [
+                "void func(int *ptr);",
+                "void func(int ptr);",
+                "void func(int ptr*);",
+                "None of the above"], correct: 0 },
+
+            { question: "What is the purpose of 'ftell()' in file handling?", options: [
+                "To determine the size of a file",
+                "To get the current position of the file pointer",
+                "To move the file pointer to the beginning of the file",
+                "None of the above"], correct: 1 },
+
+            { question: "What is the output of this code?\n\n```c\nchar str[] = "abcdef";\nprintf('%c', *(str + 3));\n```", options: [
+                "a", "b", "c", "d"], correct: 3 },
+
+            { question: "Which of the following is not a valid use of pointers?", options: [
+                "Accessing array elements",
+                "Storing addresses of variables",
+                "Arithmetic operations on addresses",
+                "Returning local variables from a function"], correct: 3 },
+
+            { question: "What is the output of this code?\n\n```c\nstruct Node { int data; struct Node *next; };\nstruct Node n1 = {10, NULL}, n2 = {20, &n1};\nprintf('%d', n2.next->data);\n```", options: [
+                "10", "20", "NULL", "Error"], correct: 0 }
+        ];
 
         // Dynamically render questions
         const form = document.getElementById('examForm');
@@ -102,7 +217,7 @@ const questions = [
             div.classList.add('question');
 
             div.innerHTML = `
-                <h3>${index + 1}. ${q.question}</h3>
+                <h3>${index + 1}. ${q.question.replace(/\n/g, '<br>').replace(/\`\`\`/g, '<code>').replace(/\`/g, '<code>')}</h3>
                 <ul class="options">
                     ${q.options.map((option, i) => `
                         <li>
@@ -114,57 +229,27 @@ const questions = [
                     `).join('')}
                 </ul>
                 <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
-                <div class="feedback"></div>
+                <p id="feedback${index}" class="feedback"></p>
             `;
 
             form.insertBefore(div, form.lastElementChild);
         });
 
-        // Check individual answer
-        function checkAnswer(index) {
-            const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-            const feedbackDiv = form.querySelector(`.question:nth-child(${index + 1}) .feedback`);
-
-            if (selected) {
-                if (parseInt(selected.value) === questions[index].correct) {
-                    feedbackDiv.textContent = "Correct!";
-                    feedbackDiv.style.color = "green";
-                } else {
-                    feedbackDiv.textContent = "Incorrect. Try again!";
-                    feedbackDiv.style.color = "red";
-                }
-            } else {
-                feedbackDiv.textContent = "Please select an answer.";
-                feedbackDiv.style.color = "orange";
-            }
-        }
-
         // Grade the exam
         function gradeExam() {
             let score = 0;
             const totalQuestions = questions.length;
-            let unanswered = 0;
 
             questions.forEach((q, index) => {
                 const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-
-                if (selected) {
-                    if (parseInt(selected.value) === q.correct) {
-                        score++;
-                    }
-                } else {
-                    unanswered++;
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
                 }
             });
 
             // Display results
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `You scored ${score} out of ${totalQuestions}.`;
-
-            if (unanswered > 0) {
-                resultDiv.innerHTML += ` You have ${unanswered} unanswered questions.`;
-            }
         }
-    </script>
-</body>
-</html>
+
+       

@@ -8,319 +8,103 @@
 <body>
     <h1>Answer the Questions</h1>
     <form id="quiz-form">
-        <div id="question-container"></div>
+        <div id="question-container">
+            <div>
+                <h2>Question 1: Pointer Arithmetic</h2>
+                <ul>
+                    <li><input type="radio" name="question-0" value="10" id="q0-a1"><label for="q0-a1">10</label></li>
+                    <li><input type="radio" name="question-0" value="20" id="q0-a2"><label for="q0-a2">20</label></li>
+                    <li><input type="radio" name="question-0" value="30" id="q0-a3"><label for="q0-a3">30</label></li>
+                    <li><input type="radio" name="question-0" value="40" id="q0-a4"><label for="q0-a4">40</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 2: Dynamic Memory Allocation</h2>
+                <ul>
+                    <li><input type="radio" name="question-1" value="2" id="q1-a1"><label for="q1-a1">2</label></li>
+                    <li><input type="radio" name="question-1" value="3" id="q1-a2"><label for="q1-a2">3</label></li>
+                    <li><input type="radio" name="question-1" value="4" id="q1-a3"><label for="q1-a3">4</label></li>
+                    <li><input type="radio" name="question-1" value="5" id="q1-a4"><label for="q1-a4">5</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 3: Files and Strings</h2>
+                <ul>
+                    <li><input type="radio" name="question-2" value="1" id="q2-a1"><label for="q2-a1">is awesome!</label></li>
+                    <li><input type="radio" name="question-2" value="2" id="q2-a2"><label for="q2-a2">C is awesome!</label></li>
+                    <li><input type="radio" name="question-2" value="3" id="q2-a3"><label for="q2-a3">awesome!</label></li>
+                    <li><input type="radio" name="question-2" value="4" id="q2-a4"><label for="q2-a4">s awesome!</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 4: Command-Line Arguments</h2>
+                <ul>
+                    <li><input type="radio" name="question-3" value="1" id="q3-a1"><label for="q3-a1">Hello 84</label></li>
+                    <li><input type="radio" name="question-3" value="2" id="q3-a2"><label for="q3-a2">Error</label></li>
+                    <li><input type="radio" name="question-3" value="3" id="q3-a3"><label for="q3-a3">Hello 42</label></li>
+                    <li><input type="radio" name="question-3" value="4" id="q3-a4"><label for="q3-a4">Compilation error</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 5: Generic Function Using void *</h2>
+                <ul>
+                    <li><input type="radio" name="question-4" value="1" id="q4-a1"><label for="q4-a1">0</label></li>
+                    <li><input type="radio" name="question-4" value="2" id="q4-a2"><label for="q4-a2">10</label></li>
+                    <li><input type="radio" name="question-4" value="3" id="q4-a3"><label for="q4-a3">Compilation error</label></li>
+                    <li><input type="radio" name="question-4" value="4" id="q4-a4"><label for="q4-a4">Undefined behavior</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 6: File Pointers and EOF</h2>
+                <ul>
+                    <li><input type="radio" name="question-5" value="1" id="q5-a1"><label for="q5-a1">A</label></li>
+                    <li><input type="radio" name="question-5" value="2" id="q5-a2"><label for="q5-a2">C</label></li>
+                    <li><input type="radio" name="question-5" value="3" id="q5-a3"><label for="q5-a3">D</label></li>
+                    <li><input type="radio" name="question-5" value="4" id="q5-a4"><label for="q5-a4">Undefined behavior</label></li>
+                </ul>
+            </div>
+            <div>
+                <h2>Question 7: Memory Leak</h2>
+                <ul>
+                    <li><input type="radio" name="question-6" value="1" id="q6-a1"><label for="q6-a1">No issues</label></li>
+                    <li><input type="radio" name="question-6" value="2" id="q6-a2"><label for="q6-a2">Memory leak</label></li>
+                    <li><input type="radio" name="question-6" value="3" id="q6-a3"><label for="q6-a3">Double free</label></li>
+                    <li><input type="radio" name="question-6" value="4" id="q6-a4"><label for="q6-a4">Undefined behavior</label></li>
+                </ul>
+            </div>
+        </div>
         <button type="submit">Submit All</button>
     </form>
+
     <h2 id="score" style="display: none;"></h2>
 
     <script>
-        const theoreticalQuestions = [
-  {
-    question: "What will the following code print? \n\nint* ptr = malloc(sizeof(int) * 5); for (int i = 0; i < 5; i++) ptr[i] = i; free(ptr); printf('%d', ptr[2]);",
-    correctAnswer: "Undefined behavior (use after free)",
-    incorrectAnswers: [
-      "2",
-      "0",
-      "Segmentation fault"
-    ]
-  },
-  {
-    question: "What is the output of this code? \n\nstruct Point { int x, y; }; struct Point *p = malloc(sizeof(struct Point)); p->x = 10; p->y = 20; printf('%d', p);",
-    correctAnswer: "Memory address of 'p'",
-    incorrectAnswers: [
-      "10",
-      "20",
-      "Segmentation fault"
-    ]
-  },
-  {
-    question: "What happens when you use a pointer to a local variable after the function exits (without using 'free')?",
-    correctAnswer: "The pointer becomes dangling, leading to undefined behavior",
-    incorrectAnswers: [
-      "It points to NULL",
-      "It causes a memory leak",
-      "The variable is automatically freed"
-    ]
-  },
-  {
-    question: "What will be the output of this code? \n\nchar* str = 'Hello'; str[0] = 'J'; printf('%s', str);",
-    correctAnswer: "Segmentation fault (modifying a string literal)",
-    incorrectAnswers: [
-      "Jello",
-      "Hello",
-      "Helo"
-    ]
-  },
-  {
-    question: "In C, what does the 'sizeof' operator return when applied to a pointer?",
-    correctAnswer: "The size of the pointer itself, not the memory it points to",
-    incorrectAnswers: [
-      "The size of the memory block pointed to",
-      "The size of the type pointed to",
-      "The size of the pointer plus the memory it points to"
-    ]
-  },
-  {
-    question: "What happens if you forget to use 'free' after dynamically allocating memory for a structure?",
-    correctAnswer: "It results in a memory leak",
-    incorrectAnswers: [
-      "It crashes the program immediately",
-      "The memory is automatically freed when the program ends",
-      "It overwrites the structure's values"
-    ]
-  },
-  {
-    question: "What will be the result of the following code? \n\nint* ptr1 = malloc(sizeof(int)); *ptr1 = 10; int* ptr2 = ptr1; free(ptr1); printf('%d', *ptr2);",
-    correctAnswer: "Undefined behavior (use after free)",
-    incorrectAnswers: [
-      "10",
-      "0",
-      "Segmentation fault"
-    ]
-  },
-  {
-    question: "Given the following structure definition: \n\nstruct Node { int data; struct Node* next; }; What will be the result of dereferencing 'node->next->data' if 'node->next' is NULL?",
-    correctAnswer: "Segmentation fault",
-    incorrectAnswers: [
-      "0",
-      "NULL",
-      "Undefined behavior"
-    ]
-  },
-  {
-    question: "What will happen when a file opened for writing is opened in 'r' mode using 'fopen'?",
-    correctAnswer: "The program will fail to open the file (NULL pointer returned)",
-    incorrectAnswers: [
-      "The file is overwritten",
-      "The file is opened successfully",
-      "The program crashes immediately"
-    ]
-  },
-  {
-    question: "What is the result of attempting to access a structure member through a pointer that has not been initialized?",
-    correctAnswer: "Undefined behavior",
-    incorrectAnswers: [
-      "Zero",
-      "NULL",
-      "Random data"
-    ]
-  },
-  {
-    question: "What will the following code print? \n\nint* ptr = malloc(sizeof(int)); *ptr = 5; free(ptr); ptr = NULL; printf('%p', ptr);",
-    correctAnswer: "NULL",
-    incorrectAnswers: [
-      "Segmentation fault",
-      "5",
-      "Random memory address"
-    ]
-  },
-  {
-    question: "What is the result of this code? \n\nint* arr = malloc(sizeof(int) * 10); arr[10] = 100; printf('%d', arr[10]);",
-    correctAnswer: "Undefined behavior (out of bounds access)",
-    incorrectAnswers: [
-      "100",
-      "Segmentation fault",
-      "0"
-    ]
-  },
-  {
-    question: "What is the difference between 'struct' and 'typedef struct' in C?",
-    correctAnswer: "'typedef struct' creates an alias for the structure type, while 'struct' defines the structure itself",
-    incorrectAnswers: [
-      "'typedef struct' creates a structure and 'struct' is used to create an alias",
-      "There is no difference, they are interchangeable",
-      "'typedef struct' is used for dynamic memory allocation"
-    ]
-  },
-  {
-    question: "What happens if you attempt to read from a file that was opened in 'write' mode ('w')?",
-    correctAnswer: "It will fail (file pointer is positioned at the beginning of the file and data is overwritten)",
-    incorrectAnswers: [
-      "It will print the existing file contents",
-      "It will cause a segmentation fault",
-      "It will return NULL"
-    ]
-  },
-  {
-    question: "What will be the result of this code? \n\nint a = 10, *p = &a; *p = 20; p = malloc(sizeof(int)); *p = 30; free(p); printf('%d', a);",
-    correctAnswer: "20",
-    incorrectAnswers: [
-      "30",
-      "Segmentation fault",
-      "Undefined behavior"
-    ]
-  },
-  {
-    question: "What happens if a function attempts to return a pointer to a local variable?",
-    correctAnswer: "The pointer becomes a dangling pointer, leading to undefined behavior",
-    incorrectAnswers: [
-      "The variable is returned by reference",
-      "The variable is copied to the heap",
-      "The function crashes"
-    ]
-  },
-  {
-    question: "What will the following code print? \n\nint* ptr = malloc(sizeof(int) * 3); for (int i = 0; i < 3; i++) ptr[i] = i; free(ptr); ptr[2] = 10; printf('%d', ptr[2]);",
-    correctAnswer: "Undefined behavior (use after free)",
-    incorrectAnswers: [
-      "10",
-      "3",
-      "Segmentation fault"
-    ]
-  },
-  {
-    question: "What will be the result of calling 'fopen' with a non-existent file in 'r' mode?",
-    correctAnswer: "NULL is returned (file cannot be opened for reading)",
-    incorrectAnswers: [
-      "An empty file is opened",
-      "A segmentation fault occurs",
-      "The file is created automatically"
-    ]
-  },
-  {
-    question: "What does the following code print? \n\nchar* str = malloc(6); strcpy(str, 'Hello'); str[5] = 'Y'; printf('%s', str);",
-    correctAnswer: "HelloY",
-    incorrectAnswers: [
-      "Hello",
-      "Segmentation fault",
-      "H"
-    ]
-  },
-  {
-    question: "What happens when you dereference an invalid memory address?",
-    correctAnswer: "Segmentation fault",
-    incorrectAnswers: [
-      "Undefined behavior",
-      "The value is zero",
-      "The program crashes without a message"
-    ]
-  },
-  {
-    question: "What happens when a file opened with 'fopen' in 'w' mode is opened again in 'r' mode?",
-    correctAnswer: "The file is reopened and the contents are truncated to zero length",
-    incorrectAnswers: [
-      "The file is appended to",
-      "An error occurs and the program crashes",
-      "The file remains unchanged"
-    ]
-  },
-  {
-    question: "What will the following code print? \n\nint x = 10; int* p = &x; free(p); printf('%d', *p);",
-    correctAnswer: "Undefined behavior (use after free)",
-    incorrectAnswers: [
-      "10",
-      "NULL",
-      "Segmentation fault"
-    ]
-  },
-  {
-    question: "Given the following code: \n\nchar* str = malloc(10); strcpy(str, 'Long string'); printf('%s', str); What happens?",
-    correctAnswer: "Buffer overflow (undefined behavior)",
-    incorrectAnswers: [
-      "The string is truncated",
-      "Segmentation fault",
-      "Memory is allocated properly"
-    ]
-  },
-  {
-    question: "What will be the result of the following code? \n\nchar* str = 'Hello'; str[0] = 'J'; printf('%s', str);",
-    correctAnswer: "Segmentation fault (string literal is read-only)",
-    incorrectAnswers: [
-      "Jello",
-      "Hello",
-      "Helo"
-    ]
-  },
-  {
-    question: "What is the result of attempting to access an array out of bounds in C?",
-    correctAnswer: "Undefined behavior (could lead to memory corruption)",
-    incorrectAnswers: [
-      "Segmentation fault",
-      "The array element is set to zero",
-      "The program crashes immediately"
-    ]
-  },
-  {
-    question: "What happens when a dynamically allocated memory block is freed twice?",
-    correctAnswer: "Double free error (undefined behavior)",
-    incorrectAnswers: [
-      "Memory is automatically reallocated",
-      "The second free call is ignored",
-      "The memory block is deallocated properly"
-    ]
-  }
-];
-
-
-        // Function to display the questions
-        function displayQuestions() {
-            const container = document.getElementById('question-container');
-            theoreticalQuestions.forEach((question, index) => {
-                const questionElement = document.createElement('div');
-                questionElement.innerHTML = `
-                    <h2>Question ${index + 1}: ${question.question}</h2>
-                    <ul>
-                        ${[question.correctAnswer, ...question.incorrectAnswers]
-                            .sort(() => Math.random() - 0.5)
-                            .map((answer, i) => `
-                                <li>
-                                    <input type="radio" name="question-${index}" value="${answer}" id="question-${index}-answer-${i}">
-                                    <label for="question-${index}-answer-${i}">${answer}</label>
-                                </li>
-                            `).join('')}
-                    </ul>
-                    <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
-                    <div id="result-${index}" style="display:none;"></div>
-                `;
-                container.appendChild(questionElement);
-            });
-        }
-
-        // Function to check the answer for a specific question
-        function checkAnswer(index) {
-            const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
-            const resultElement = document.getElementById(`result-${index}`);
-            
-            if (selectedAnswer) {
-                if (selectedAnswer.value === theoreticalQuestions[index].correctAnswer) {
-                    resultElement.textContent = "Correct!";
-                    resultElement.style.color = 'green';
-                } else {
-                    resultElement.textContent = "Incorrect.";
-                    resultElement.style.color = 'red';
-                }
-                resultElement.style.display = 'block';
-            } else {
-                resultElement.textContent = "Please select an answer.";
-                resultElement.style.color = 'orange';
-                resultElement.style.display = 'block';
-            }
-        }
-
-        // Function to handle form submission and calculate score
         function handleSubmit(event) {
             event.preventDefault();
             let score = 0;
-            
-            theoreticalQuestions.forEach((question, index) => {
-                const selectedAnswer = document.querySelector(`input[name="question-${index}"]:checked`);
-                
-                if (selectedAnswer && selectedAnswer.value === question.correctAnswer) {
+            const answers = {
+                "question-0": "20", // Correct Answer for Question 1
+                "question-1": "4",  // Correct Answer for Question 2
+                "question-2": "1",  // Correct Answer for Question 3
+                "question-3": "1",  // Correct Answer for Question 4
+                "question-4": "2",  // Correct Answer for Question 5
+                "question-5": "3",  // Correct Answer for Question 6
+                "question-6": "2",  // Correct Answer for Question 7
+            };
+
+            for (let i = 0; i < 7; i++) {
+                const selectedAnswer = document.querySelector(`input[name="question-${i}"]:checked`);
+                if (selectedAnswer && selectedAnswer.value === answers[`question-${i}`]) {
                     score++;
                 }
-            });
+            }
 
-            // Display the score
             const scoreElement = document.getElementById('score');
-            scoreElement.textContent = `Your score is: ${score} out of ${theoreticalQuestions.length}`;
+            scoreElement.textContent = `Your score is: ${score} out of 7`;
             scoreElement.style.display = 'block';
         }
 
-        // Set up the form submit handler
         document.getElementById('quiz-form').addEventListener('submit', handleSubmit);
-
-        // Call the display function when the page loads
-        displayQuestions();
     </script>
 </body>
 </html>

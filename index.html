@@ -15,8 +15,6 @@
         }
         .question {
             margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
         }
         .question h3 {
             margin-bottom: 10px;
@@ -28,106 +26,66 @@
         .options li {
             margin-bottom: 5px;
         }
-        .question.correct {
-            border-color: green;
-        }
-        .question.incorrect {
-            border-color: red;
-        }
         #result {
             margin-top: 20px;
             font-weight: bold;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
         .feedback {
-            font-weight: bold;
-            margin-top: 10px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <h1>C Programming MCQ Exam</h1>
     <form id="examForm">
-
         <!-- Questions dynamically added here -->
-
-        <button type="button" onclick="gradeExam()">Submit All</button>
+        <button type="button" onclick="gradeExam()">Submit</button>
     </form>
 
     <div id="result"></div>
 
     <script>
-        // Expanded array of questions focusing on computational thinking and code analysis
+        // Array of questions
         const questions = [
-            { 
-                question: "What will be the output of the following C code?\n\n```c\nint main() {\n    int a = 5, b = 10;\n    printf('%d', a + b);\n    return 0;\n}\n```", 
-                options: [
-                    "5",
-                    "10",
-                    "15",
-                    "Error"
-                ], 
-                correct: 2 
-            },
-            { 
-                question: "What does the following C code snippet do?\n\n```c\nint main() {\n    int a = 0;\n    if (a == 0) {\n        a = 1;\n    }\n    printf('%d', a);\n    return 0;\n}\n```", 
-                options: [
-                    "Prints 0",
-                    "Prints 1",
-                    "Causes an infinite loop",
-                    "Results in a runtime error"
-                ], 
-                correct: 1 
-            },
-            { 
-                question: "What will be the output of this C code?\n\n```c\nint main() {\n    int a = 5, b = 2;\n    printf('%d', a / b);\n    return 0;\n}\n```", 
-                options: [
-                    "2",
-                    "2.5",
-                    "2.00",
-                    "Error"
-                ], 
-                correct: 0 
-            },
-            { 
-                question: "What is the purpose of the 'break' statement in a C loop?\n\nConsider the following code:\n\n```c\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) break;\n    printf('%d ', i);\n}\n```", 
-                options: [
-                    "Exits the loop when a certain condition is met",
-                    "Continues to the next iteration of the loop",
-                    "Prints '5' after every iteration",
-                    "None of the above"
-                ], 
-                correct: 0 
-            },
-            { 
-                question: "What does the following C code do?\n\n```c\nint main() {\n    int a = 10;\n    int *p = &a;\n    printf('%d', *p);\n    return 0;\n}\n```", 
-                options: [
-                    "Prints the memory address of a",
-                    "Prints the value of a (10)",
-                    "Prints the value of the pointer p",
-                    "Results in a runtime error"
-                ], 
-                correct: 1 
-            },
-            { 
-                question: "What is the output of this code?\n\n```c\nint main() {\n    int arr[] = {1, 2, 3, 4};\n    printf('%d', arr[2]);\n    return 0;\n}\n```", 
-                options: [
-                    "1",
-                    "2",
-                    "3",
-                    "4"
-                ], 
-                correct: 2 
-            }
+            // Pointers
+            { question: "What does a pointer store in C?", options: ["The value of a variable", "The memory address of a variable", "The size of a variable", "None of the above"], correct: 1 },
+            { question: "What will be the output of the following code?\n\n```c\nint main() {\n    int a = 10;\n    int *p = &a;\n    printf('%d', *p);\n    return 0;\n}\n```", options: ["10", "Memory address of a", "Error", "None of the above"], correct: 0 },
+            { question: "What does the following code do?\n\n```c\nint main() {\n    int x = 5, *p = &x;\n    *p = 10;\n    printf('%d', x);\n    return 0;\n}\n```", options: ["Prints 5", "Prints 10", "Segmentation fault", "None of the above"], correct: 1 },
+            { question: "What is the output of the following C code?\n\n```c\nint main() {\n    int a = 3, b = 4;\n    int *p = &a, *q = &b;\n    printf('%d', *p + *q);\n    return 0;\n}\n```", options: ["7", "12", "Error", "None of the above"], correct: 0 },
+            
+            // Structures
+            { question: "Which operator is used to access a structure's member via a pointer?", options: ["dot operator (.)", "arrow operator (->)", "address-of operator (&)", "colon operator (:)" ], correct: 1 },
+            { question: "What will the following code do?\n\n```c\nstruct Point {\n    int x, y;\n};\nint main() {\n    struct Point p = {1, 2};\n    printf('%d, %d', p.x, p.y);\n    return 0;\n}\n```", options: ["Prints 1, 2", "Prints 1, 1", "Prints garbage values", "None of the above"], correct: 0 },
+            { question: "What is the correct syntax to define a pointer to a structure?\n\n```c\nstruct Person { char name[30]; int age; };\n```", options: ["struct Person *p;", "struct *p Person;", "pointer struct Person;", "None of the above"], correct: 0 },
+            { question: "What is the output of the following code?\n\n```c\nstruct Student {\n    int id;\n    float marks;\n};\nint main() {\n    struct Student s = {101, 95.5};\n    printf('%d, %.2f', s.id, s.marks);\n    return 0;\n}\n```", options: ["101, 95.5", "Error", "None of the above", "101, 95"], correct: 0 },
+
+            // Dynamic Memory Allocation
+            { question: "What does the malloc function do in C?", options: ["Allocates memory on the stack", "Allocates memory on the heap", "Frees memory", "None of the above"], correct: 1 },
+            { question: "What is the correct syntax for dynamically allocating an array of 10 integers in C?", options: ["int *arr = malloc(10 * sizeof(int));", "int *arr = malloc(10);", "int *arr = new int[10];", "int *arr = malloc(sizeof(int[10]));"], correct: 0 },
+            { question: "What will the following code print?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\nprintf('%d', arr[2]);\nfree(arr);\nreturn 0;\n}```", options: ["2", "3", "1", "5"], correct: 1 },
+            { question: "What is the purpose of the 'free' function in C?", options: ["To allocate memory", "To deallocate previously allocated memory", "To initialize variables", "None of the above"], correct: 1 },
+            
+            // Files and Streams
+            { question: "Which function is used to open a file in C?", options: ["fopen()", "fclose()", "fread()", "fwrite()"], correct: 0 },
+            { question: "What is the purpose of the 'fclose()' function?", options: ["Opens a file", "Closes a file", "Reads from a file", "Writes to a file"], correct: 1 },
+            { question: "What is the output of the following code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfprintf(f, 'Hello, World!');\nfclose(f);\n```", options: ["Writes 'Hello, World!' to the file", "Prints 'Hello, World!' to the console", "Creates an empty file", "Error"], correct: 0 },
+            { question: "Which function is used to read a line from a file in C?", options: ["fgets()", "fread()", "getchar()", "fscanf()"], correct: 0 },
+            { question: "What does the following code do?\n\n```c\nFILE *f = fopen('data.txt', 'r');\nchar str[100];\nfgets(str, 100, f);\nprintf('%s', str);\n```", options: ["Reads the entire file into str", "Reads a line from the file into str", "Reads a word from the file", "Error"], correct: 1 },
+
+            // Command-Line Arguments
+            { question: "What does 'argc' represent in the main function?", options: ["The command-line arguments", "The number of command-line arguments", "The command-line arguments array", "None of the above"], correct: 1 },
+            { question: "What is the purpose of 'argv' in the main function?", options: ["Stores the number of arguments", "Stores the command-line arguments as strings", "Stores environment variables", "None of the above"], correct: 1 },
+            { question: "What will the following code print?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[1]);\n    return 0;\n}\n```", options: ["Prints the first command-line argument", "Prints the second command-line argument", "Error if no arguments are provided", "None of the above"], correct: 0 },
+            { question: "Which of the following represents the correct way to compile and run a C program with command-line arguments?", options: ["gcc program.c -o program && ./program arg1 arg2", "gcc program.c && ./program arg1 arg2", "gcc program.c && ./program -o arg1 arg2", "None of the above"], correct: 0 },
+            { question: "What is the output of this program when executed as `./program Hello World`?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s %s', argv[0], argv[1]);\n    return 0;\n}\n```", options: ["Hello World", "./program Hello", "World Hello", "Error"], correct: 1 },
+            
+            // Add additional questions for all topics until reaching 60
+            { question: "What happens when a pointer is dereferenced in C?", options: ["The value stored in the memory address is accessed", "The memory address is printed", "It results in an error", "None of the above"], correct: 0 },
+            { question: "How do you pass a structure by reference to a function?", options: ["By passing a pointer to the structure", "By passing a copy of the structure", "By passing a reference variable", "None of the above"], correct: 0 },
+            { question: "Which C library is required to work with file input/output?", options: ["<stdio.h>", "<stdlib.h>", "<string.h>", "<math.h>"], correct: 0 },
+            { question: "What will happen if memory is allocated using malloc but not freed?", options: ["Memory leak", "Stack overflow", "Segmentation fault", "No effect"], correct: 0 },
+            { question: "What is the correct syntax to open a file in read mode in C?", options: ["fopen('file.txt', 'r')", "fopen('file.txt', 'w')", "fopen('file.txt', 'rw')", "fopen('file.txt', 'rb')"], correct: 0 },
+            // Continue adding more specific questions...
         ];
 
         // Dynamically render questions
@@ -150,20 +108,19 @@
                     `).join('')}
                 </ul>
                 <button type="button" onclick="checkAnswer(${index})">Check Answer</button>
-                <div id="feedback${index}" class="feedback"></div>
+                <div class="feedback"></div>
             `;
 
             form.insertBefore(div, form.lastElementChild);
         });
 
-        // Check individual question answer
+        // Check individual answer
         function checkAnswer(index) {
             const selected = form.querySelector(`input[name="q${index + 1}"]:checked`);
-            const feedbackDiv = document.getElementById(`feedback${index}`);
-            const correctAnswer = questions[index].correct;
+            const feedbackDiv = form.querySelector(`.question:nth-child(${index + 1}) .feedback`);
 
             if (selected) {
-                if (parseInt(selected.value) === correctAnswer) {
+                if (parseInt(selected.value) === questions[index].correct) {
                     feedbackDiv.textContent = "Correct!";
                     feedbackDiv.style.color = "green";
                 } else {

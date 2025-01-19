@@ -46,51 +46,53 @@
 
     <script>
         // Array of questions (60 total)
-        const questions = [
-            // Pointers Section
-            { question: "What is the output of the following code?\n\n```c\nint x = 5, *ptr = &x;\n*ptr = 10;\nprintf('%d', x);\n```", options: ["10", "5", "Segmentation fault", "Error"], correct: 0 },
-            { question: "Which of the following is true about pointers in C?", options: ["A pointer holds the value of a variable", "A pointer holds the memory address of a variable", "Pointers can only point to integers", "Pointers are the same as arrays"], correct: 1 },
-            { question: "What will the following code print?\n\n```c\nint a = 20, *p = &a;\nprintf('%d', *p);\n```", options: ["20", "Memory address of a", "Error", "None of the above"], correct: 0 },
-            { question: "What does the dereference operator (*) do in C?", options: ["Accesses the value at a memory address", "Returns the memory address", "Creates a pointer", "None of the above"], correct: 0 },
-            { question: "What will be printed by this code?\n\n```c\nint arr[3] = {1, 2, 3};\nint *p = arr;\nprintf('%d', *(p + 1));\n```", options: ["2", "1", "3", "Error"], correct: 0 },
-            
-            // Structures Section
-            { question: "Which operator is used to access a structure's member via a pointer?", options: ["dot operator (.)", "arrow operator (->)", "address-of operator (&)", "colon operator (:)"], correct: 1 },
-            { question: "Which of the following is the correct way to declare a structure?", options: ["struct {int a; float b;} s;", "struct s {int a; float b;};", "struct s {a: int; b: float;};", "struct s (int a, float b);"], correct: 1 },
-            { question: "What does the following C code do?\n\n```c\nstruct Point {\n    int x, y;\n};\nint main() {\n    struct Point p = {1, 2};\n    printf('%d, %d', p.x, p.y);\n    return 0;\n}\n```", options: ["Prints 1, 2", "Prints 1, 1", "Prints garbage values", "None of the above"], correct: 0 },
-            { question: "What will the following code output?\n\n```c\nstruct Student {\n    int id;\n    float marks;\n};\nint main() {\n    struct Student s = {101, 95.5};\n    printf('%d, %.2f', s.id, s.marks);\n    return 0;\n}\n```", options: ["101, 95.5", "Error", "None of the above", "101, 95"], correct: 0 },
-            { question: "Which is the correct way to pass a structure to a function?", options: ["By passing a pointer to the structure", "By passing a copy of the structure", "By passing a reference variable", "None of the above"], correct: 0 },
-            
-            // Dynamic Memory Section
-            { question: "What is the correct syntax to allocate memory dynamically for an array of 10 integers?", options: ["int *arr = malloc(10 * sizeof(int));", "int *arr = malloc(10);", "int arr = new int[10];", "int arr[10] = malloc();"], correct: 0 },
-            { question: "Which function is used to deallocate memory in C?", options: ["malloc()", "free()", "calloc()", "realloc()"], correct: 1 },
-            { question: "What is the purpose of the 'calloc' function?", options: ["Allocates memory for an array of elements and initializes them to zero", "Allocates memory for a single element", "Frees allocated memory", "None of the above"], correct: 0 },
-            { question: "What will be the output of the following code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\nprintf('%d', arr[2]);\nfree(arr);\nreturn 0;\n```", options: ["2", "3", "1", "5"], correct: 1 },
-            { question: "What happens if you try to access memory after calling free() on it?", options: ["Segmentation fault", "Memory leak", "The program will continue without issues", "None of the above"], correct: 0 },
-            
-            // Files & Streams Section
-            { question: "Which function is used to open a file in C?", options: ["fopen()", "fclose()", "fread()", "fwrite()"], correct: 0 },
-            { question: "What does the 'fclose()' function do?", options: ["Opens a file", "Closes a file", "Reads from a file", "Writes to a file"], correct: 1 },
-            { question: "What is the output of the following code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfprintf(f, 'Hello, World!');\nfclose(f);\n```", options: ["Writes 'Hello, World!' to the file", "Prints 'Hello, World!' to the console", "Creates an empty file", "Error"], correct: 0 },
-            { question: "Which function is used to read a line from a file in C?", options: ["fgets()", "fread()", "getchar()", "fscanf()"], correct: 0 },
-            { question: "What is the output of this code?\n\n```c\nFILE *f = fopen('data.txt', 'r');\nchar str[100];\nfgets(str, 100, f);\nprintf('%s', str);\n```", options: ["Reads the entire file into str", "Reads a line from the file into str", "Reads a word from the file", "Error"], correct: 1 },
-            
-            // Command-Line Arguments Section
-            { question: "What does 'argc' represent in the main function?", options: ["The command-line arguments", "The number of command-line arguments", "The command-line arguments array", "None of the above"], correct: 1 },
-            { question: "What is the purpose of 'argv' in the main function?", options: ["Stores the number of arguments", "Stores the command-line arguments as strings", "Stores environment variables", "None of the above"], correct: 1 },
-            { question: "What will the following code print?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[1]);\n    return 0;\n}\n```", options: ["Prints the first command-line argument", "Prints the second command-line argument", "Error if no arguments are provided", "None of the above"], correct: 0 },
-            { question: "Which of the following represents the correct way to compile and run a C program with command-line arguments?", options: ["gcc program.c -o program && ./program arg1 arg2", "gcc program.c && ./program arg1 arg2", "gcc program.c && ./program -o arg1 arg2", "None of the above"], correct: 0 },
-            { question: "What is the output of this program when executed as `./program Hello World`?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s %s', argv[0], argv[1]);\n    return 0;\n}\n```", options: ["Hello World", "./program Hello", "World Hello", "Error"], correct: 1 },
+        <script>
+const questions = [
+    // Pointers Section (Advanced)
+    { question: "What will the following code output?\n\n```c\nint x = 5, *p = &x, **q = &p;\n**q = 10;\nprintf('%d', x);\n```", options: ["10", "5", "Segmentation fault", "Error"], correct: 0 },
+    { question: "What happens when you try to dereference a pointer that was initialized to an invalid memory address?", options: ["Segmentation fault", "The program continues without issues", "The pointer is set to NULL", "None of the above"], correct: 0 },
+    { question: "What will be the output of the following code?\n\n```c\nint *ptr = NULL;\nif (ptr) {\n    printf('True');\n} else {\n    printf('False');\n}\n```", options: ["True", "False", "Error", "Segmentation fault"], correct: 1 },
+    
+    // Structures Section (Advanced)
+    { question: "Given the following structure:\n\n```c\nstruct Person {\n    char name[100];\n    int age;\n    struct Address *address;\n};\nstruct Address {\n    char street[100];\n    char city[100];\n};\n``` What is the proper way to dynamically allocate memory for both the 'Person' and 'Address' structures?", options: ["struct Person *p = malloc(sizeof(struct Person)); p->address = malloc(sizeof(struct Address));", "struct Person *p = malloc(sizeof(struct Person));", "struct Address *a = malloc(sizeof(struct Address));", "None of the above"], correct: 0 },
+    { question: "Which of the following statements is correct about the 'sizeof' operator in C?", options: ["It gives the size of a variable or data type", "It cannot be used with structures", "It only works with pointers", "None of the above"], correct: 0 },
+    
+    // Dynamic Memory Section (Advanced)
+    { question: "Which function should be used to change the size of previously allocated memory?", options: ["malloc()", "free()", "realloc()", "calloc()"], correct: 2 },
+    { question: "What happens when 'malloc' is called but the system runs out of memory?", options: ["It returns NULL", "It throws an error", "It returns a random address", "None of the above"], correct: 0 },
+    { question: "What will be the result of this code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfor (int i = 0; i < 5; i++) {\n    arr[i] = i + 1;\n}\narr = realloc(arr, 10 * sizeof(int));\nprintf('%d', arr[8]);\n```", options: ["Unpredictable behavior", "0", "9", "Segmentation fault"], correct: 0 },
+    
+    // Files & Streams Section (Advanced)
+    { question: "What happens when you try to write to a file opened in 'r' mode?", options: ["The file is created", "The file is overwritten", "The program crashes", "Nothing happens"], correct: 3 },
+    { question: "What is the output of the following code?\n\n```c\nFILE *f = fopen('file.txt', 'w');\nfputs('Hello', f);\nfseek(f, 0, SEEK_SET);\nfputs('World', f);\nfclose(f);\n```", options: ["World", "Hello", "HelloWorld", "Error"], correct: 0 },
+    { question: "What will happen if you attempt to read beyond the end of a file using 'fgets()'?", options: ["It will return NULL", "It will return the last read value", "It will cause an infinite loop", "None of the above"], correct: 0 },
+    
+    // Command-Line Arguments Section (Advanced)
+    { question: "What will be the result of this code?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s', argv[argc]);\n    return 0;\n}\n```", options: ["Undefined behavior", "The last command-line argument", "NULL", "Error"], correct: 0 },
+    { question: "Which of the following is correct regarding 'argc' and 'argv'?", options: ["'argc' gives the number of arguments including the program name", "'argc' is always 0", "'argv' contains the number of command-line arguments", "None of the above"], correct: 0 },
+    { question: "What does the following code output when run with `./program 1 2 3`?\n\n```c\nint main(int argc, char *argv[]) {\n    for (int i = 1; i < argc; i++) {\n        printf('%s ', argv[i]);\n    }\n    return 0;\n}\n```", options: ["1 2 3", "1 2", "2 3", "Error"], correct: 0 },
 
-            // Adding more questions to make it 60 questions
-            { question: "What happens when you dereference a NULL pointer?", options: ["Segmentation fault", "The value is 0", "No error", "None of the above"], correct: 0 },
-            { question: "What is the result of this code?\n\n```c\nstruct { int x; int y; } p = {1, 2};\nprintf('%d, %d', p.x, p.y);\n```", options: ["1, 2", "Error", "Uninitialized values", "None of the above"], correct: 0 },
-            { question: "How would you allocate a 2D array dynamically in C?", options: ["int **arr = malloc(10 * sizeof(int *)); arr[0] = malloc(10 * sizeof(int));", "int arr[10][10];", "int *arr = malloc(10 * sizeof(int *));", "None of the above"], correct: 0 },
-            { question: "Which function is used to append to a file in C?", options: ["fopen() with mode 'a'", "fopen() with mode 'w'", "fprintf()", "fread()"], correct: 0 },
-            { question: "Which of the following is true about memory leaks?", options: ["It happens when memory is allocated but not freed", "It is harmless", "It happens when you allocate memory using 'free()'", "None of the above"], correct: 0 },
-            
-            // Continue adding specific questions for all topics...
-        ];
+    // Challenging questions on Pointers, Dynamic Memory, and Structures
+    { question: "What is the output of this code?\n\n```c\nint *p = malloc(sizeof(int));\n*p = 5;\nfree(p);\np = NULL;\nprintf('%d', *p);\n```", options: ["Error", "Segmentation fault", "5", "NULL"], correct: 1 },
+    { question: "What will happen if you try to access memory that has been freed and is not NULL?", options: ["Segmentation fault", "The program will continue", "It will return the last allocated value", "None of the above"], correct: 0 },
+    { question: "What will the following code print?\n\n```c\nstruct Point { int x, y; };\nstruct Point p = {1, 2};\nstruct Point *ptr = &p;\nprintf('%d %d', ptr->x, ptr->y);\n```", options: ["1 2", "2 1", "Segmentation fault", "None of the above"], correct: 0 },
+    
+    // More Advanced Dynamic Memory Questions
+    { question: "What is the behavior of the following code?\n\n```c\nint *arr = malloc(5 * sizeof(int));\nfree(arr);\narr[0] = 10;\n```", options: ["Memory leak", "Segmentation fault", "Valid behavior", "None of the above"], correct: 1 },
+    { question: "What happens when you use 'malloc' for an array of structures, and later access a member of that structure without initializing it?", options: ["It holds a garbage value", "It will be automatically initialized to zero", "It will result in undefined behavior", "None of the above"], correct: 0 },
+    { question: "What happens when a dynamically allocated array is resized using 'realloc', and the new size is smaller than the original?", options: ["Data may be lost", "Memory is freed", "Array is cleared", "No effect"], correct: 0 },
+
+    // Pointers and Dynamic Memory combined
+    { question: "What is the result of this code?\n\n```c\nint *p = malloc(sizeof(int) * 3);\np[0] = 1; p[1] = 2; p[2] = 3;\nint *q = realloc(p, sizeof(int) * 2);\nprintf('%d', q[2]);\n```", options: ["Error", "3", "Undefined behavior", "Segmentation fault"], correct: 0 },
+    
+    // Challenging Command-Line Arguments questions
+    { question: "What will the following code output if executed as `./program arg1 arg2`?\n\n```c\nint main(int argc, char *argv[]) {\n    printf('%s %s', argv[0], argv[argc - 1]);\n    return 0;\n}\n```", options: ["./program arg2", "arg1 arg2", "./program arg1", "Error"], correct: 0 },
+    { question: "How do you access the first command-line argument (excluding the program name)?", options: ["argv[0]", "argv[1]", "argv[argc]", "None of the above"], correct: 1 },
+
+    // Final Challenging Question on Pointers and Memory
+    { question: "What happens when you attempt to dereference a pointer that was allocated memory via 'malloc', but was never initialized?", options: ["It may contain a random value", "It will be set to zero", "It will cause a segmentation fault", "None of the above"], correct: 0 },
+];
+</script>
 
         // Dynamically render questions
         const form = document.getElementById('examForm');

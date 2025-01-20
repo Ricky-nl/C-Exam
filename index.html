@@ -3,122 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCQ Exam</title>
-</head>
-<body>
-    <h1>Answer the Questions</h1>
-    <form id="quiz-form">
-        <div id="question-container">
-            <!-- Question 1 -->
-            <div>
-                <h2>Question 1: Pointer Arithmetic</h2>
-                <p>What will this expression `*(ptr + 1) - *(ptr - 1)` print, if `ptr` points to the array `[10, 20, 30, 40]`?</p>
-                <ul>
-                    <li><input type="radio" name="question-0" value="10" id="q0-a1"><label for="q0-a1">10</label></li>
-                    <li><input type="radio" name="question-0" value="20" id="q0-a2"><label for="q0-a2">20</label></li>
-                    <li><input type="radio" name="question-0" value="30" id="q0-a3"><label for="q0-a3">30</label></li>
-                    <li><input type="radio" name="question-0" value="40" id="q0-a4"><label for="q0-a4">40</label></li>
-                </ul>
-            </div>
-            <!-- Question 2 -->
-            <div>
-                <h2>Question 2: Dynamic Memory Allocation</h2>
-                <p>How many numbers are stored in `arr` after reading from the file, if you allocated memory for 3 integers dynamically and used `fscanf`?</p>
-                <ul>
-                    <li><input type="radio" name="question-1" value="2" id="q1-a1"><label for="q1-a1">2</label></li>
-                    <li><input type="radio" name="question-1" value="3" id="q1-a2"><label for="q1-a2">3</label></li>
-                    <li><input type="radio" name="question-1" value="4" id="q1-a3"><label for="q1-a3">4</label></li>
-                    <li><input type="radio" name="question-1" value="5" id="q1-a4"><label for="q1-a4">5</label></li>
-                </ul>
-            </div>
-            <!-- Question 3 -->
-            <div>
-                <h2>Question 3: Files and Strings</h2>
-                <p>If you read the string `"Hello world!"` and use `str + 2`, what does the code print?</p>
-                <ul>
-                    <li><input type="radio" name="question-2" value="1" id="q2-a1"><label for="q2-a1">is awesome!</label></li>
-                    <li><input type="radio" name="question-2" value="2" id="q2-a2"><label for="q2-a2">C is awesome!</label></li>
-                    <li><input type="radio" name="question-2" value="3" id="q2-a3"><label for="q2-a3">awesome!</label></li>
-                    <li><input type="radio" name="question-2" value="4" id="q2-a4"><label for="q2-a4">s awesome!</label></li>
-                </ul>
-            </div>
-            <!-- Question 4 -->
-            <div>
-                <h2>Question 4: Command-Line Arguments</h2>
-                <p>If you run `./program 42 2` with the program using `atoi(argv[2]) * 2`, what does it print?</p>
-                <ul>
-                    <li><input type="radio" name="question-3" value="1" id="q3-a1"><label for="q3-a1">Hello 84</label></li>
-                    <li><input type="radio" name="question-3" value="2" id="q3-a2"><label for="q3-a2">Error</label></li>
-                    <li><input type="radio" name="question-3" value="3" id="q3-a3"><label for="q3-a3">Hello 42</label></li>
-                    <li><input type="radio" name="question-3" value="4" id="q3-a4"><label for="q3-a4">Compilation error</label></li>
-                </ul>
-            </div>
-            <!-- Question 5 -->
-            <div>
-                <h2>Question 5: Generic Function Using void *</h2>
-                <p>What does this generic function print: `*(int *)ptr` where `ptr` points to `x = 10`?</p>
-                <ul>
-                    <li><input type="radio" name="question-4" value="0" id="q4-a1"><label for="q4-a1">0</label></li>
-                    <li><input type="radio" name="question-4" value="10" id="q4-a2"><label for="q4-a2">10</label></li>
-                    <li><input type="radio" name="question-4" value="3" id="q4-a3"><label for="q4-a3">Compilation error</label></li>
-                    <li><input type="radio" name="question-4" value="4" id="q4-a4"><label for="q4-a4">Undefined behavior</label></li>
-                </ul>
-            </div>
-            <!-- Question 6 -->
-            <div>
-                <h2>Question 6: File Pointers and EOF</h2>
-                <p>If you use `fseek(fp, 2, SEEK_SET)` and read a character from the file, what is the value returned by `fgetc`?</p>
-                <ul>
-                    <li><input type="radio" name="question-5" value="A" id="q5-a1"><label for="q5-a1">A</label></li>
-                    <li><input type="radio" name="question-5" value="C" id="q5-a2"><label for="q5-a2">C</label></li>
-                    <li><input type="radio" name="question-5" value="D" id="q5-a3"><label for="q5-a3">D</label></li>
-                    <li><input type="radio" name="question-5" value="Undefined" id="q5-a4"><label for="q5-a4">Undefined behavior</label></li>
-                </ul>
-            </div>
-            <!-- Question 7 -->
-            <div>
-                <h2>Question 7: Memory Leak</h2>
-                <p>If you allocate memory for `ptr` using `malloc` and then call `realloc` without freeing the original memory, what happens?</p>
-                <ul>
-                    <li><input type="radio" name="question-6" value="No issues" id="q6-a1"><label for="q6-a1">No issues</label></li>
-                    <li><input type="radio" name="question-6" value="Memory leak" id="q6-a2"><label for="q6-a2">Memory leak</label></li>
-                    <li><input type="radio" name="question-6" value="Double free" id="q6-a3"><label for="q6-a3">Double free</label></li>
-                    <li><input type="radio" name="question-6" value="Undefined behavior" id="q6-a4"><label for="q6-a4">Undefined behavior</label></li>
-                </ul>
-            </div>
-        </div>
-        <button type="submit">Submit All</button>
-    </form>
-
-    <h2 id="score" style="display: none;"></h2>
-
+    <title>C Programming MCQ Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .check-answer {
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            let score = 0;
-            const answers = {
-                "question-0": "20", // Correct Answer for Question 1
-                "question-1": "4",  // Correct Answer for Question 2
-                "question-2": "1",  // Correct Answer for Question 3
-                "question-3": "1",  // Correct Answer for Question 4
-                "question-4": "2",  // Correct Answer for Question 5
-                "question-5": "3",  // Correct Answer for Question 6
-                "question-6": "2",  // Correct Answer for Question 7
-            };
-
-            for (let i = 0; i < 7; i++) {
-                const selectedAnswer = document.querySelector(`input[name="question-${i}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === answers[`question-${i}`]) {
-                    score++;
+        function checkAnswer(questionId, correctAnswer) {
+            const radios = document.getElementsByName(questionId);
+            let selectedValue = null;
+            for (const radio of radios) {
+                if (radio.checked) {
+                    selectedValue = radio.value;
+                    break;
                 }
             }
 
-            const scoreElement = document.getElementById('score');
-            scoreElement.textContent = `Your score is: ${score} out of 7`;
-            scoreElement.style.display = 'block';
+            const result = document.getElementById(`${questionId}-result`);
+            if (selectedValue === correctAnswer) {
+                result.textContent = "Correct!";
+                result.style.color = "green";
+            } else {
+                result.textContent = "Incorrect! The correct answer is " + correctAnswer;
+                result.style.color = "red";
+            }
         }
-
-        document.getElementById('quiz-form').addEventListener('submit', handleSubmit);
     </script>
+</head>
+<body>
+    <h1>C Programming MCQ Practice</h1>
+
+    <div class="question" id="question-1">
+        <h2>Question 1: Pointer Arithmetic</h2>
+        <p>What will this expression `*(ptr + 1) - *(ptr - 1)` print, if `ptr` points to the array `[10, 20, 30, 40]`?</p>
+        <ul>
+            <li><input type="radio" name="question-1" value="10" id="q1-a1"><label for="q1-a1">10</label></li>
+            <li><input type="radio" name="question-1" value="20" id="q1-a2"><label for="q1-a2">20</label></li>
+            <li><input type="radio" name="question-1" value="30" id="q1-a3"><label for="q1-a3">30</label></li>
+            <li><input type="radio" name="question-1" value="40" id="q1-a4"><label for="q1-a4">40</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-1', '20')">Check Answer</button>
+        <p id="question-1-result"></p>
+    </div>
+
+    <div class="question" id="question-2">
+        <h2>Question 2: Dynamic Memory Allocation</h2>
+        <p>How many numbers are stored in `arr` after reading from the file, if you allocated memory for 3 integers dynamically and used `fscanf`?</p>
+        <ul>
+            <li><input type="radio" name="question-2" value="2" id="q2-a1"><label for="q2-a1">2</label></li>
+            <li><input type="radio" name="question-2" value="3" id="q2-a2"><label for="q2-a2">3</label></li>
+            <li><input type="radio" name="question-2" value="4" id="q2-a3"><label for="q2-a3">4</label></li>
+            <li><input type="radio" name="question-2" value="5" id="q2-a4"><label for="q2-a4">5</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-2', '3')">Check Answer</button>
+        <p id="question-2-result"></p>
+    </div>
+
+    <div class="question" id="question-3">
+        <h2>Question 3: Files and Strings</h2>
+        <p>If you read the string `"Hello world!"` and use `str + 2`, what does the code print?</p>
+        <ul>
+            <li><input type="radio" name="question-3" value="is awesome!" id="q3-a1"><label for="q3-a1">is awesome!</label></li>
+            <li><input type="radio" name="question-3" value="C is awesome!" id="q3-a2"><label for="q3-a2">C is awesome!</label></li>
+            <li><input type="radio" name="question-3" value="awesome!" id="q3-a3"><label for="q3-a3">awesome!</label></li>
+            <li><input type="radio" name="question-3" value="s awesome!" id="q3-a4"><label for="q3-a4">s awesome!</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-3', 's awesome!')">Check Answer</button>
+        <p id="question-3-result"></p>
+    </div>
+
+    <div class="question" id="question-4">
+        <h2>Question 4: Command-Line Arguments</h2>
+        <p>If you run `./program 42 2` with the program using `atoi(argv[2]) * 2`, what does it print?</p>
+        <ul>
+            <li><input type="radio" name="question-4" value="Hello 84" id="q4-a1"><label for="q4-a1">Hello 84</label></li>
+            <li><input type="radio" name="question-4" value="Error" id="q4-a2"><label for="q4-a2">Error</label></li>
+            <li><input type="radio" name="question-4" value="Hello 42" id="q4-a3"><label for="q4-a3">Hello 42</label></li>
+            <li><input type="radio" name="question-4" value="Compilation error" id="q4-a4"><label for="q4-a4">Compilation error</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-4', 'Error')">Check Answer</button>
+        <p id="question-4-result"></p>
+    </div>
+
+    <div class="question" id="question-5">
+        <h2>Question 5: Generic Function Using void *</h2>
+        <p>What does this generic function print: `*(int *)ptr` where `ptr` points to `x = 10`?</p>
+        <ul>
+            <li><input type="radio" name="question-5" value="0" id="q5-a1"><label for="q5-a1">0</label></li>
+            <li><input type="radio" name="question-5" value="10" id="q5-a2"><label for="q5-a2">10</label></li>
+            <li><input type="radio" name="question-5" value="Compilation error" id="q5-a3"><label for="q5-a3">Compilation error</label></li>
+            <li><input type="radio" name="question-5" value="Undefined behavior" id="q5-a4"><label for="q5-a4">Undefined behavior</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-5', '10')">Check Answer</button>
+        <p id="question-5-result"></p>
+    </div>
+
+    <div class="question" id="question-6">
+        <h2>Question 6: File Pointers and EOF</h2>
+        <p>If you use `fseek(fp, 2, SEEK_SET)` and read a character from the file, what is the value returned by `fgetc`?</p>
+        <ul>
+            <li><input type="radio" name="question-6" value="A" id="q6-a1"><label for="q6-a1">A</label></li>
+            <li><input type="radio" name="question-6" value="C" id="q6-a2"><label for="q6-a2">C</label></li>
+            <li><input type="radio" name="question-6" value="D" id="q6-a3"><label for="q6-a3">D</label></li>
+            <li><input type="radio" name="question-6" value="Undefined" id="q6-a4"><label for="q6-a4">Undefined behavior</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-6', 'D')">Check Answer</button>
+        <p id="question-6-result"></p>
+    </div>
+
+    <div class="question" id="question-7">
+        <h2>Question 7: Memory Leak</h2>
+        <p>If you allocate memory for `ptr` using `malloc` and then call `realloc` without freeing the original memory, what happens?</p>
+        <ul>
+            <li><input type="radio" name="question-7" value="No issues" id="q7-a1"><label for="q7-a1">No issues</label></li>
+            <li><input type="radio" name="question-7" value="Memory leak" id="q7-a2"><label for="q7-a2">Memory leak</label></li>
+            <li><input type="radio" name="question-7" value="Double free" id="q7-a3"><label for="q7-a3">Double free</label></li>
+            <li><input type="radio" name="question-7" value="Undefined behavior" id="q7-a4"><label for="q7-a4">Undefined behavior</label></li>
+        </ul>
+        <button class="check-answer" onclick="checkAnswer('question-7', 'Memory leak')">Check Answer</button>
+        <p id="question-7-result"></p>
+    </div>
 </body>
 </html>
